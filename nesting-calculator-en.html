@@ -17,8 +17,8 @@
   .header h1{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff,#8899bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .header p{margin-top:2px;font-size:13px;color:#5a6a8a;font-weight:300}
   .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:20px}
-  .settings-row{padding:20px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-  .settings-row+.settings-row{padding-top:0;border-top:1px solid rgba(255,255,255,.04);padding-top:16px}
+  .settings-row{padding:11px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .settings-row+.settings-row{border-top:1px solid rgba(255,255,255,.04);padding-top:11px}
   .dot{width:8px;height:8px;border-radius:50%;background:#4ecdc4;box-shadow:0 0 8px rgba(78,205,196,.5)}
   .label-upper{font-size:14px;font-weight:500;color:#8899bb;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
   .setting-group{display:flex;align-items:center;gap:8px}
@@ -64,10 +64,72 @@
   .site-footer a{color:#4ecdc4;text-decoration:none}
   @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-  @media(max-width:600px){body{padding:12px 12px 0}.table-head,.item-row{grid-template-columns:36px 1fr 1fr 1fr 40px;gap:6px;padding:10px 12px}.settings-row{gap:12px}.total-num{font-size:28px}.total-num-secondary{font-size:22px}}
+  @media(max-width:600px){body{padding:12px 12px 0}.table-head,.item-row{grid-template-columns:36px 1fr 1fr 1fr 40px;gap:6px;padding:10px 12px}.settings-row{gap:10px}.total-num{font-size:28px}.total-num-secondary{font-size:22px}}
+  /* --- Print / Screen extras --- */
+  .print-header{display:none}
+  .print-val{display:none}
+  .btn-print{background:rgba(78,205,196,.08);border:1px solid rgba(78,205,196,.25);color:#4ecdc4;padding:10px 28px;border-radius:10px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:20px}
+  .btn-print:hover{background:rgba(78,205,196,.18);border-color:rgba(78,205,196,.5)}
+  .eff-bar{}
+  @media print{
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{background:#fff!important;color:#000!important;padding:16px!important;font-size:12px}
+    .wrap{max-width:100%}
+    .print-header{display:flex!important;justify-content:space-between;align-items:flex-start;padding-bottom:16px;border-bottom:2px solid #000;margin-bottom:20px}
+    .ph-logo{width:80px;height:64px;border:2px dashed #bbb;display:flex;align-items:center;justify-content:center;font-size:10px;color:#bbb;flex-shrink:0;border-radius:4px;text-align:center;line-height:1.4}
+    .ph-info{flex:1;margin-left:18px}
+    .ph-name{font-size:22px;font-weight:700;color:#000;font-family:'Space Grotesk',sans-serif;letter-spacing:-.5px}
+    .ph-details{font-size:11px;color:#444;margin-top:4px;line-height:1.7}
+    .ph-meta{text-align:right;font-size:11px;color:#444;min-width:130px}
+    .ph-doc-title{font-size:18px;font-weight:700;color:#000;margin-bottom:6px;letter-spacing:.5px}
+    .header{display:none!important}
+    .settings-card{display:none!important}
+    .canvas-card{display:none!important}
+    .note{display:none!important}
+    .site-footer{display:none!important}
+    .btn-add{display:none!important}
+    .btn-remove{display:none!important}
+    .btn-print{display:none!important}
+    .items-card{border:1px solid #ddd!important;background:#fff!important;border-radius:8px!important;margin-bottom:16px!important}
+    .table-head{background:#f0f0f0!important;border-bottom:1px solid #ccc!important}
+    .table-head span{color:#222!important}
+    .item-row{border-bottom:1px solid #eee!important;background:#fff!important}
+    .item-row input{display:none!important}
+    .print-val{display:inline!important;color:#000;font-size:15px;font-weight:600}
+    .row-num{color:#333!important}
+    .results{background:#fff!important;border:1px solid #ddd!important;border-radius:8px!important;animation:none!important}
+    .results-header{border-bottom:1px solid #ddd!important;background:#f0f0f0!important}
+    .results-header span{color:#000!important}
+    .results-header .dot{background:#000!important;box-shadow:none!important}
+    .r-value,.r-accent,.r-dim{color:#222!important}
+    .r-error{color:#c00!important}
+    .eff-bar{display:none!important}
+    .total-section{border-top:1px solid #ddd!important}
+    .total-bar{background:#f5f5f5!important}
+    .total-bar+.total-bar{border-top:1px solid #ddd!important}
+    .total-label{color:#222!important}
+    .total-sublabel{color:#555!important}
+    .total-num{color:#000!important;text-shadow:none!important;font-size:26px!important}
+    .total-num-secondary{color:#000!important;text-shadow:none!important;font-size:20px!important}
+    .total-unit{color:#333!important}
+    .total-sub{color:#555!important}
+    .vat-note{color:#555!important;border-top:1px solid #ddd!important}
+    .dot{box-shadow:none!important}
+  }
 </style>
 </head>
 <body>
+<div class="print-header">
+  <div class="ph-logo">LOGO<br>PLACEHOLDER</div>
+  <div class="ph-info">
+    <div class="ph-name">3MD</div>
+    <div class="ph-details">VAT: 101215262<br>NEMANJINA BR.27, 18322 Obrenovac, Serbia</div>
+  </div>
+  <div class="ph-meta">
+    <div class="ph-doc-title">QUOTE</div>
+    <div>Date: <span id="printDate"></span></div>
+  </div>
+</div>
 <div class="wrap">
   <div class="header">
     <div class="header-icon">⚙</div>
@@ -77,7 +139,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card settings-card">
     <div class="settings-row">
       <div style="display:flex;align-items:center;gap:8px"><div class="dot"></div><label class="label-upper" for="sirinaRolne">Coil Width</label></div>
       <div class="setting-group"><input type="number" id="sirinaRolne" value="1250" min="1" aria-label="Coil width" oninput="debouncedCalc()"><span class="unit-label" id="rolnaUnit">mm</span></div>
@@ -94,17 +156,21 @@
     <div class="settings-row">
       <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#e0c64f;box-shadow:0 0 8px rgba(224,198,79,.4)"></div><label class="label-upper" for="cenaSavijanja">Bending Cost / m</label></div>
       <div class="setting-group setting-group-sm"><input type="number" id="cenaSavijanja" value="1.5" min="0" step="0.1" aria-label="Bending cost per linear meter" oninput="debouncedCalc()"><span class="unit-label">USD</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#e0c64f;box-shadow:0 0 8px rgba(224,198,79,.4)"></div><label class="label-upper" for="jedCena">Unit Price / m</label></div>
+      <div class="setting-group setting-group-sm"><input type="number" id="jedCena" value="10" min="0" step="0.5" aria-label="Unit price USD/m" oninput="debouncedCalc()"><span class="unit-label">USD</span></div>
       <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><label class="label-upper">Length Mixing</label>
         <div class="unit-toggle" id="mixToggle" role="group" aria-label="Mixing mode"><button class="active" onclick="setMixMode(true)">Combined</button><button onclick="setMixMode(false)">Strict</button></div>
       </div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card items-card">
     <div class="table-head"><span>#</span><span>Qty</span><span id="thSirina">Width (mm)</span><span id="thDuzina">Length (mm)</span><span></span></div>
     <div id="itemsContainer"></div>
     <div style="padding:0 24px 8px"><button class="btn-add" onclick="addItem()">+ Add item</button></div>
   </div>
+
+  <button class="btn-print" onclick="window.print()">Print Quote</button>
 
   <div class="results">
     <div class="results-header"><div class="dot"></div><span>Calculation Results</span></div>
@@ -148,8 +214,8 @@ function toMm(val){return currentUnit==='mm'?Math.round(val):Math.round(val*10)}
 function fmtMm(mm){if(mm>=1000)return(mm/1000).toFixed(2)+' m';if(currentUnit==='mm')return mm+' mm';return(mm/10).toFixed(1)+' cm'}
 
 const LS_KEY='3md_calc_en';
-function saveToLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify({items,currentUnit,allowMixing,nextId,sirinaRolne:document.getElementById('sirinaRolne').value,kerf:document.getElementById('kerfInput').value,safety:document.getElementById('safetyMargin').value,cena:document.getElementById('cenaSavijanja').value}))}catch(e){}}
-function loadFromLocal(){try{const r=localStorage.getItem(LS_KEY);if(!r)return false;const d=JSON.parse(r);if(d.items&&d.items.length)items=d.items;if(d.nextId)nextId=d.nextId;if(d.currentUnit)currentUnit=d.currentUnit;if(typeof d.allowMixing==='boolean')allowMixing=d.allowMixing;if(d.sirinaRolne)document.getElementById('sirinaRolne').value=d.sirinaRolne;if(d.kerf)document.getElementById('kerfInput').value=d.kerf;if(d.safety)document.getElementById('safetyMargin').value=d.safety;if(d.cena)document.getElementById('cenaSavijanja').value=d.cena;document.getElementById('rolnaUnit').textContent=currentUnit;document.getElementById('thSirina').textContent='Width ('+currentUnit+')';document.getElementById('thDuzina').textContent='Length ('+currentUnit+')';document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('active',b.textContent===currentUnit));document.querySelectorAll('#mixToggle button').forEach((b,i)=>b.classList.toggle('active',allowMixing?i===0:i===1));return true}catch(e){return false}}
+function saveToLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify({items,currentUnit,allowMixing,nextId,sirinaRolne:document.getElementById('sirinaRolne').value,kerf:document.getElementById('kerfInput').value,safety:document.getElementById('safetyMargin').value,cena:document.getElementById('cenaSavijanja').value,jedCena:document.getElementById('jedCena').value}))}catch(e){}}
+function loadFromLocal(){try{const r=localStorage.getItem(LS_KEY);if(!r)return false;const d=JSON.parse(r);if(d.items&&d.items.length)items=d.items;if(d.nextId)nextId=d.nextId;if(d.currentUnit)currentUnit=d.currentUnit;if(typeof d.allowMixing==='boolean')allowMixing=d.allowMixing;if(d.sirinaRolne)document.getElementById('sirinaRolne').value=d.sirinaRolne;if(d.kerf)document.getElementById('kerfInput').value=d.kerf;if(d.safety)document.getElementById('safetyMargin').value=d.safety;if(d.cena)document.getElementById('cenaSavijanja').value=d.cena;if(d.jedCena)document.getElementById('jedCena').value=d.jedCena;document.getElementById('rolnaUnit').textContent=currentUnit;document.getElementById('thSirina').textContent='Width ('+currentUnit+')';document.getElementById('thDuzina').textContent='Length ('+currentUnit+')';document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('active',b.textContent===currentUnit));document.querySelectorAll('#mixToggle button').forEach((b,i)=>b.classList.toggle('active',allowMixing?i===0:i===1));return true}catch(e){return false}}
 
 function setUnit(unit){if(unit===currentUnit)return;const f=unit==='mm'?10:0.1;document.getElementById('sirinaRolne').value=Math.round(parseFloat(document.getElementById('sirinaRolne').value)*f*100)/100;items=items.map(i=>({...i,sirina:Math.round(i.sirina*f*100)/100,duzina:Math.round(i.duzina*f*100)/100}));currentUnit=unit;document.getElementById('rolnaUnit').textContent=unit;document.getElementById('thSirina').textContent='Width ('+unit+')';document.getElementById('thDuzina').textContent='Length ('+unit+')';document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('active',b.textContent===unit));render()}
 function setMixMode(a){allowMixing=a;document.querySelectorAll('#mixToggle button').forEach((b,i)=>b.classList.toggle('active',a?i===0:i===1));calculate()}
@@ -160,7 +226,7 @@ function updateItem(id,field,value){items=items.map(i=>i.id===id?{...i,[field]:p
 function render(){
   document.getElementById('itemsContainer').innerHTML=items.map((item,idx)=>{
     const inv=item.kom<=0||item.sirina<=0||item.duzina<=0;
-    return`<div class="item-row ${inv?'invalid':''}"><span class="row-num">${String(idx+1).padStart(2,'0')}</span><input type="number" value="${item.kom}" min="1" aria-label="Qty ${idx+1}" oninput="updateItem(${item.id},'kom',this.value)"><input type="number" value="${item.sirina}" min="0.1" aria-label="Width ${idx+1}" oninput="updateItem(${item.id},'sirina',this.value)"><input type="number" value="${item.duzina}" min="0.1" aria-label="Length ${idx+1}" oninput="updateItem(${item.id},'duzina',this.value)"><button class="btn-remove ${items.length===1?'disabled':''}" aria-label="Remove ${idx+1}" onclick="removeItem(${item.id})">×</button></div>`;
+    return`<div class="item-row ${inv?'invalid':''}"><span class="row-num">${String(idx+1).padStart(2,'0')}</span><input type="number" value="${item.kom}" min="1" aria-label="Qty ${idx+1}" oninput="updateItem(${item.id},'kom',this.value)"><span class="print-val">${item.kom}</span><input type="number" value="${item.sirina}" min="0.1" aria-label="Width ${idx+1}" oninput="updateItem(${item.id},'sirina',this.value)"><span class="print-val">${item.sirina}</span><input type="number" value="${item.duzina}" min="0.1" aria-label="Length ${idx+1}" oninput="updateItem(${item.id},'duzina',this.value)"><span class="print-val">${item.duzina}</span><button class="btn-remove ${items.length===1?'disabled':''}" aria-label="Remove ${idx+1}" onclick="removeItem(${item.id})">×</button></div>`;
   }).join('');
   calculate();
 }
@@ -195,7 +261,7 @@ function calculate(){
     const wd=shelf.wasteArea>=1e6?(shelf.wasteArea/1e6).toFixed(2)+' m²':shelf.wasteArea>=1e4?(shelf.wasteArea/1e4).toFixed(0)+' cm²':shelf.wasteArea+' mm²';
     html+=`<div style="padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px;align-items:start">
       <div><div style="margin-bottom:4px"><span class="r-dim">Pass ${pi+1}</span> <span class="r-accent">${fmtMm(shelf.dMm)}</span>${isMixed?'<span style="font-size:10px;background:rgba(78,205,196,.15);color:#4ecdc4;padding:2px 6px;border-radius:4px;margin-left:6px">COMBINED</span>':''}</div>${sd}</div>
-      <div class="r-value" style="padding-top:2px">efficiency: <span style="color:${ec};font-weight:600">${shelf.efficiency.toFixed(0)}%</span><div style="margin-top:4px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="height:100%;width:${shelf.efficiency}%;background:${ec};border-radius:3px"></div></div></div>
+      <div class="r-value" style="padding-top:2px">efficiency: <span style="color:${ec};font-weight:600">${shelf.efficiency.toFixed(0)}%</span><div class="eff-bar" style="margin-top:4px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="height:100%;width:${shelf.efficiency}%;background:${ec};border-radius:3px"></div></div></div>
       <div class="r-right" style="padding-top:2px"><span class="r-dim">waste: </span><span style="color:${shelf.wasteArea>shelf.totalArea*.3?'#ff9050':'#5a6a8a'};font-weight:500">${wd}</span></div>
     </div>`;
   });
@@ -204,12 +270,18 @@ function calculate(){
   const totLen=shelfResults.reduce((s,p)=>s+p.dMm,0);const totArea=shelfResults.reduce((s,p)=>s+p.totalArea,0);const usedArea=shelfResults.reduce((s,p)=>s+p.usedArea,0);
   const eff=totArea>0?(usedArea/totArea*100).toFixed(1):0;const komb=shelfResults.filter(p=>Object.keys(p.byLen).length>1).length;
   const bendM=(bendingMm/1000).toFixed(2);const cena=parseFloat(document.getElementById('cenaSavijanja').value)||0;const cenaTotal=(parseFloat(bendM)*cena).toFixed(2);
+  const jedCenaVal=parseFloat(document.getElementById('jedCena').value)||0;
+  const cenaMaterijala=((totLen/1000)*jedCenaVal).toFixed(2);
+  const ukupnaCena=(parseFloat(cenaMaterijala)+parseFloat(cenaTotal)).toFixed(2);
   const safeNote=safetyMm>0?` · margin ${safetyMm}mm×2`:'';
 
   document.getElementById('totalSection').innerHTML=`
     <div class="total-bar"><div><span class="total-label">Total Coil Length</span><div class="total-sublabel">${shelfResults.length} passes${komb>0?` (${komb} combined)`:''} · efficiency ${eff}%${kerfMm>0?` · kerf ${kerfMm}mm`:''}${safeNote}</div></div><div style="text-align:right"><span class="total-num">${(totLen/1000).toFixed(2)}</span><span class="total-unit" style="color:#2ab7a9">m</span><div class="total-sub">(${fmtMm(totLen)})</div></div></div>
     <div class="total-bar" style="background:rgba(224,198,79,.06)"><div><span class="total-label">Bending Service</span><div class="total-sublabel">sum (qty × length) of all profiles</div></div><div style="text-align:right"><span class="total-num-secondary">${bendM}</span><span class="total-unit" style="color:#c4a830">m</span><div class="total-sub">(${fmtMm(bendingMm)})</div></div></div>
+    <div class="total-bar" style="background:rgba(78,205,196,.05)"><div><span class="total-label">Material Cost</span><div class="total-sublabel">${(totLen/1000).toFixed(2)} m × ${jedCenaVal.toLocaleString('en-US',{minimumFractionDigits:2})} USD/m</div></div><div style="text-align:right"><span class="total-num-secondary">${parseFloat(cenaMaterijala).toLocaleString('en-US',{minimumFractionDigits:2})}</span><span class="total-unit" style="color:#c4a830">USD</span></div></div>
     <div class="total-bar" style="background:rgba(224,198,79,.04)"><div><span class="total-label">Bending Cost</span><div class="total-sublabel">${bendM} m × ${cena} USD/m</div></div><div style="text-align:right"><span class="total-num-secondary">${parseFloat(cenaTotal).toLocaleString('en-US',{minimumFractionDigits:2})}</span><span class="total-unit" style="color:#c4a830">USD</span></div></div>
+    <div class="total-bar" style="background:rgba(78,205,196,.12)"><div><span class="total-label">Total Cost</span><div class="total-sublabel">Material Cost + Bending Cost</div></div><div style="text-align:right"><span class="total-num" style="color:#e0c64f;text-shadow:0 0 30px rgba(224,198,79,.3)">${parseFloat(ukupnaCena).toLocaleString('en-US',{minimumFractionDigits:2})}</span><span class="total-unit" style="color:#c4a830">USD</span></div></div>
+    <div style="padding:10px 24px;font-size:11px;color:#5a6a8a;text-align:right" class="vat-note">VAT is included in the price</div>
   `;
   drawNesting();saveToLocal();
 }
@@ -233,6 +305,7 @@ function drawNesting(){
 }
 
 loadFromLocal();render();
+document.getElementById('printDate').textContent = new Date().toLocaleDateString('en-GB');
 </script>
 </body>
 </html>
