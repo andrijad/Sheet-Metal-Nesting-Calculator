@@ -24,6 +24,13 @@
   .setting-group{display:flex;align-items:center;gap:8px}
   .setting-group input{width:120px;text-align:center;font-size:18px;font-weight:600}
   .setting-group-sm input{width:80px;text-align:center;font-size:15px;font-weight:600}
+  .settings-panel{max-width:520px;padding:16px 20px;display:flex;flex-direction:column;gap:16px}
+  .param-section{display:flex;flex-direction:column;gap:8px}
+  .param-section+.param-section{border-top:1px solid rgba(255,255,255,.06);padding-top:14px}
+  .param-section-title{font-size:11px;font-weight:600;color:#4ecdc4;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+  .param-row{display:flex;align-items:center;gap:8px}
+  .param-label{font-size:14px;font-weight:500;color:#8899bb;white-space:nowrap;min-width:130px}
+  .param-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
   .unit-label{color:#5a6a8a;font-size:14px;white-space:nowrap}
   .unit-toggle{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden}
   .unit-toggle button{background:none;border:none;color:#5a6a8a;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;padding:8px 16px;cursor:pointer;transition:all .2s}
@@ -140,26 +147,63 @@
   </div>
 
   <div class="card settings-card">
-    <div class="settings-row">
-      <div style="display:flex;align-items:center;gap:8px"><div class="dot"></div><label class="label-upper" for="sirinaRolne">Coil Width</label></div>
-      <div class="setting-group"><input type="number" id="sirinaRolne" value="1250" min="1" aria-label="Coil width" oninput="debouncedCalc()"><span class="unit-label" id="rolnaUnit">mm</span></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><label class="label-upper">Unit</label>
-        <div class="unit-toggle" id="unitToggle" role="group" aria-label="Unit selection"><button onclick="setUnit('cm')">cm</button><button class="active" onclick="setUnit('mm')">mm</button></div>
+    <div class="settings-panel">
+      <div class="param-section">
+        <div class="param-section-title">Material</div>
+        <div class="param-row">
+          <label class="param-label" for="sirinaRolne">Coil width</label>
+          <div class="setting-group">
+            <input type="number" id="sirinaRolne" value="1250" min="1" aria-label="Coil width" oninput="debouncedCalc()">
+            <span class="unit-label" id="rolnaUnit">mm</span>
+            <div class="unit-toggle" id="unitToggle" role="group" aria-label="Unit selection">
+              <button onclick="setUnit('cm')">cm</button>
+              <button class="active" onclick="setUnit('mm')">mm</button>
+            </div>
+          </div>
+        </div>
+        <div class="param-row">
+          <label class="param-label" for="jedCena">Unit price / m</label>
+          <div class="setting-group setting-group-sm">
+            <input type="number" id="jedCena" value="10" min="0" step="0.5" aria-label="Unit price USD/m" oninput="debouncedCalc()">
+            <span class="unit-label">USD</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="settings-row">
-      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#ff9050;box-shadow:0 0 8px rgba(255,144,80,.4)"></div><label class="label-upper" for="kerfInput">Blade Kerf</label></div>
-      <div class="setting-group setting-group-sm"><input type="number" id="kerfInput" value="2" min="0" step="0.5" aria-label="Blade kerf mm" oninput="debouncedCalc()"><span class="unit-label">mm</span></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><div class="dot" style="background:#ff9050;box-shadow:0 0 8px rgba(255,144,80,.4)"></div><label class="label-upper" for="safetyMargin">Edge Margin</label></div>
-      <div class="setting-group setting-group-sm"><input type="number" id="safetyMargin" value="5" min="0" step="1" aria-label="Edge safety margin mm per side" oninput="debouncedCalc()"><span class="unit-label">mm ×2</span></div>
-    </div>
-    <div class="settings-row">
-      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#e0c64f;box-shadow:0 0 8px rgba(224,198,79,.4)"></div><label class="label-upper" for="cenaSavijanja">Bending Cost / m</label></div>
-      <div class="setting-group setting-group-sm"><input type="number" id="cenaSavijanja" value="1.5" min="0" step="0.1" aria-label="Bending cost per linear meter" oninput="debouncedCalc()"><span class="unit-label">USD</span></div>
-      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#e0c64f;box-shadow:0 0 8px rgba(224,198,79,.4)"></div><label class="label-upper" for="jedCena">Unit Price / m</label></div>
-      <div class="setting-group setting-group-sm"><input type="number" id="jedCena" value="10" min="0" step="0.5" aria-label="Unit price USD/m" oninput="debouncedCalc()"><span class="unit-label">USD</span></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><label class="label-upper">Length Mixing</label>
-        <div class="unit-toggle" id="mixToggle" role="group" aria-label="Mixing mode"><button class="active" onclick="setMixMode(true)">Combined</button><button onclick="setMixMode(false)">Strict</button></div>
+      <div class="param-section">
+        <div class="param-section-title">Cutting parameters</div>
+        <div class="param-grid">
+          <div class="param-row">
+            <label class="param-label" for="kerfInput">Cut gap</label>
+            <div class="setting-group setting-group-sm">
+              <input type="number" id="kerfInput" value="2" min="0" step="0.5" aria-label="Blade kerf mm" oninput="debouncedCalc()">
+              <span class="unit-label">mm</span>
+            </div>
+          </div>
+          <div class="param-row">
+            <label class="param-label" for="safetyMargin">Safety margin</label>
+            <div class="setting-group setting-group-sm">
+              <input type="number" id="safetyMargin" value="5" min="0" step="1" aria-label="Edge safety margin mm per side" oninput="debouncedCalc()">
+              <span class="unit-label">mm ×2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="param-section">
+        <div class="param-section-title">Bending and mixing</div>
+        <div class="param-row">
+          <label class="param-label" for="cenaSavijanja">Bending price / m</label>
+          <div class="setting-group setting-group-sm">
+            <input type="number" id="cenaSavijanja" value="1.5" min="0" step="0.1" aria-label="Bending cost per linear meter" oninput="debouncedCalc()">
+            <span class="unit-label">USD</span>
+          </div>
+        </div>
+        <div class="param-row">
+          <label class="param-label">Mixing mode</label>
+          <div class="unit-toggle" id="mixToggle" role="group" aria-label="Mixing mode">
+            <button class="active" onclick="setMixMode(true)">Combined</button>
+            <button onclick="setMixMode(false)">Strict</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
