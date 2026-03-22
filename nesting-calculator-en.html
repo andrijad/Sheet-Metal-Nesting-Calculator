@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheet Metal Nesting Calculator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;background:linear-gradient(165deg,#0a0e17 0%,#131b2e 40%,#1a1a2e 100%);color:#e0e6f0;font-family:'JetBrains Mono','Fira Code',monospace;padding:24px 24px 0}
+  input[type="number"]{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#e0e6f0;padding:10px 12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:15px;width:100%;transition:all .2s;outline:none;-moz-appearance:textfield}
+  input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none}
+  input[type="number"]:focus{border-color:#4ecdc4;box-shadow:0 0 0 3px rgba(78,205,196,.15);background:rgba(255,255,255,.07)}
+  .wrap{max-width:900px;margin:0 auto}
+  .header{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+  .header-icon{width:48px;height:48px;background:linear-gradient(135deg,#4ecdc4,#2ab7a9);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 20px rgba(78,205,196,.3)}
+  .header h1{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff,#8899bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .header p{margin-top:2px;font-size:13px;color:#5a6a8a;font-weight:300}
+  .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:20px}
+  .settings-row{padding:20px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .settings-row+.settings-row{padding-top:0;border-top:1px solid rgba(255,255,255,.04);padding-top:16px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#4ecdc4;box-shadow:0 0 8px rgba(78,205,196,.5)}
+  .label-upper{font-size:14px;font-weight:500;color:#8899bb;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+  .setting-group{display:flex;align-items:center;gap:8px}
+  .setting-group input{width:120px;text-align:center;font-size:18px;font-weight:600}
+  .setting-group-sm input{width:80px;text-align:center;font-size:15px;font-weight:600}
+  .unit-label{color:#5a6a8a;font-size:14px;white-space:nowrap}
+  .unit-toggle{display:flex;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden}
+  .unit-toggle button{background:none;border:none;color:#5a6a8a;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;padding:8px 16px;cursor:pointer;transition:all .2s}
+  .unit-toggle button.active{background:rgba(78,205,196,.2);color:#4ecdc4}
+  .unit-toggle button:hover:not(.active){background:rgba(255,255,255,.04);color:#8899bb}
+  .table-head{display:grid;grid-template-columns:50px 1fr 1fr 1fr 48px;gap:12px;padding:14px 24px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
+  .table-head span{font-size:11px;font-weight:600;color:#4a5a7a;text-transform:uppercase;letter-spacing:1.5px}
+  .item-row{display:grid;grid-template-columns:50px 1fr 1fr 1fr 48px;gap:12px;padding:12px 24px;align-items:center;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;animation:slideIn .3s ease-out}
+  .item-row:hover{background:rgba(255,255,255,.02)}
+  .item-row.invalid{background:rgba(255,80,80,.04)}
+  .item-row.invalid input{border-color:rgba(255,80,80,.3)}
+  .row-num{font-size:13px;color:#3a4a6a;font-weight:600}
+  .btn-remove{background:none;border:1px solid rgba(255,80,80,.2);color:#ff5050;border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.6}
+  .btn-remove:hover{opacity:1;background:rgba(255,80,80,.1)}
+  .btn-remove.disabled{opacity:.3;pointer-events:none}
+  .btn-add{background:rgba(78,205,196,.08);border:1px dashed rgba(78,205,196,.3);color:#4ecdc4;border-radius:10px;padding:10px 20px;cursor:pointer;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:500;transition:all .2s;width:100%;margin:16px 0}
+  .btn-add:hover{background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.5)}
+  .results{background:linear-gradient(135deg,rgba(78,205,196,.06),rgba(42,183,169,.03));border:1px solid rgba(78,205,196,.15);border-radius:16px;overflow:hidden;animation:fadeIn .4s ease-out}
+  .results-header{padding:16px 24px;border-bottom:1px solid rgba(78,205,196,.1);display:flex;align-items:center;gap:8px}
+  .results-header span{font-size:12px;font-weight:600;color:#4ecdc4;text-transform:uppercase;letter-spacing:1.5px}
+  .r-value{color:#8899bb}.r-accent{color:#4ecdc4;font-weight:600}.r-error{color:#ff5050}.r-right{text-align:right}.r-dim{color:#5a6a8a}.r-warn{color:#ff9050;font-size:11px}
+  .total-section{border-top:1px solid rgba(78,205,196,.15)}
+  .total-bar{padding:20px 24px;background:rgba(78,205,196,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .total-bar+.total-bar{border-top:1px solid rgba(78,205,196,.1)}
+  .total-label{font-size:14px;font-weight:600;color:#8899bb;text-transform:uppercase;letter-spacing:1px}
+  .total-sublabel{font-size:12px;color:#5a6a8a;margin-top:4px}
+  .total-num{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:#4ecdc4;letter-spacing:-1px;text-shadow:0 0 30px rgba(78,205,196,.3)}
+  .total-num-secondary{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#e0c64f;letter-spacing:-1px;text-shadow:0 0 20px rgba(224,198,79,.2)}
+  .total-unit{font-size:18px;font-weight:500;margin-left:6px}
+  .total-sub{font-size:12px;color:#5a6a8a;margin-top:2px}
+  .canvas-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:20px;overflow:hidden}
+  .canvas-header{padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+  .canvas-header span{font-size:12px;font-weight:600;color:#4ecdc4;text-transform:uppercase;letter-spacing:1.5px}
+  #nestingCanvas{width:100%;display:block}
+  .note{margin-top:16px;padding:14px 20px;background:rgba(255,255,255,.02);border-radius:12px;border:1px solid rgba(255,255,255,.05);font-size:12px;color:#4a5a7a;line-height:1.6}
+  .note strong{color:#5a6a8a}
+  .site-footer{margin-top:32px;padding:20px 0;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:11px;color:#3a4a6a;letter-spacing:.5px}
+  .site-footer a{color:#4ecdc4;text-decoration:none}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:600px){body{padding:12px 12px 0}.table-head,.item-row{grid-template-columns:36px 1fr 1fr 1fr 40px;gap:6px;padding:10px 12px}.settings-row{gap:12px}.total-num{font-size:28px}.total-num-secondary{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-icon">⚙</div>
+    <div>
+      <h1>Sheet Metal Nesting Calculator</h1>
+      <p>Coil length estimation for sheet metal profiles</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="settings-row">
+      <div style="display:flex;align-items:center;gap:8px"><div class="dot"></div><label class="label-upper" for="sirinaRolne">Coil Width</label></div>
+      <div class="setting-group"><input type="number" id="sirinaRolne" value="1250" min="1" aria-label="Coil width" oninput="debouncedCalc()"><span class="unit-label" id="rolnaUnit">mm</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><label class="label-upper">Unit</label>
+        <div class="unit-toggle" id="unitToggle" role="group" aria-label="Unit selection"><button onclick="setUnit('cm')">cm</button><button class="active" onclick="setUnit('mm')">mm</button></div>
+      </div>
+    </div>
+    <div class="settings-row">
+      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#ff9050;box-shadow:0 0 8px rgba(255,144,80,.4)"></div><label class="label-upper" for="kerfInput">Blade Kerf</label></div>
+      <div class="setting-group setting-group-sm"><input type="number" id="kerfInput" value="2" min="0" step="0.5" aria-label="Blade kerf mm" oninput="debouncedCalc()"><span class="unit-label">mm</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><div class="dot" style="background:#ff9050;box-shadow:0 0 8px rgba(255,144,80,.4)"></div><label class="label-upper" for="safetyMargin">Edge Margin</label></div>
+      <div class="setting-group setting-group-sm"><input type="number" id="safetyMargin" value="5" min="0" step="1" aria-label="Edge safety margin mm per side" oninput="debouncedCalc()"><span class="unit-label">mm ×2</span></div>
+    </div>
+    <div class="settings-row">
+      <div style="display:flex;align-items:center;gap:8px"><div class="dot" style="background:#e0c64f;box-shadow:0 0 8px rgba(224,198,79,.4)"></div><label class="label-upper" for="cenaSavijanja">Bending Cost / m</label></div>
+      <div class="setting-group setting-group-sm"><input type="number" id="cenaSavijanja" value="1.5" min="0" step="0.1" aria-label="Bending cost per linear meter" oninput="debouncedCalc()"><span class="unit-label">USD</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto"><label class="label-upper">Length Mixing</label>
+        <div class="unit-toggle" id="mixToggle" role="group" aria-label="Mixing mode"><button class="active" onclick="setMixMode(true)">Combined</button><button onclick="setMixMode(false)">Strict</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-head"><span>#</span><span>Qty</span><span id="thSirina">Width (mm)</span><span id="thDuzina">Length (mm)</span><span></span></div>
+    <div id="itemsContainer"></div>
+    <div style="padding:0 24px 8px"><button class="btn-add" onclick="addItem()">+ Add item</button></div>
+  </div>
+
+  <div class="results">
+    <div class="results-header"><div class="dot"></div><span>Calculation Results</span></div>
+    <div id="resultsBody"></div>
+    <div class="total-section" id="totalSection"></div>
+  </div>
+
+  <div class="canvas-card">
+    <div class="canvas-header"><div class="dot"></div><span>Visual Nesting Layout</span></div>
+    <canvas id="nestingCanvas"></canvas>
+  </div>
+
+  <div class="note">
+    <strong>Algorithm:</strong> Shelf packing (guillotine-compatible cuts). Blade kerf and edge safety margins are included.
+    "Combined" allows shorter profiles to fill remaining width. "Strict" keeps each length separate.
+  </div>
+</div>
+
+<div class="site-footer">
+  © 2025 <a href="#">AMMD WEB</a> · All rights reserved
+</div>
+
+<script>
+let currentUnit = 'mm';
+let allowMixing = true;
+let items = [
+  { id: 1, kom: 2, sirina: 330, duzina: 2000 },
+  { id: 2, kom: 3, sirina: 270, duzina: 1500 },
+  { id: 3, kom: 17, sirina: 100, duzina: 4000 },
+];
+let nextId = 4;
+let debounceTimer = null;
+let lastShelfResults = [];
+let lastUsableWidthMm = 0;
+
+const COLORS = ['rgba(78,205,196,.7)','rgba(224,198,79,.7)','rgba(255,144,80,.7)','rgba(167,139,250,.7)','rgba(251,113,133,.7)','rgba(52,211,153,.7)','rgba(96,165,250,.7)','rgba(253,186,116,.7)','rgba(244,114,182,.7)','rgba(134,239,172,.7)'];
+const COLORS_SOLID = ['#4ecdc4','#e0c64f','#ff9050','#a78bfa','#fb7185','#34d399','#60a5fa','#fdba74','#f472b6','#86efac'];
+
+function debouncedCalc(){clearTimeout(debounceTimer);debounceTimer=setTimeout(calculate,150)}
+function toMm(val){return currentUnit==='mm'?Math.round(val):Math.round(val*10)}
+function fmtMm(mm){if(mm>=1000)return(mm/1000).toFixed(2)+' m';if(currentUnit==='mm')return mm+' mm';return(mm/10).toFixed(1)+' cm'}
+
+const LS_KEY='3md_calc_en';
+function saveToLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify({items,currentUnit,allowMixing,nextId,sirinaRolne:document.getElementById('sirinaRolne').value,kerf:document.getElementById('kerfInput').value,safety:document.getElementById('safetyMargin').value,cena:document.getElementById('cenaSavijanja').value}))}catch(e){}}
+function loadFromLocal(){try{const r=localStorage.getItem(LS_KEY);if(!r)return false;const d=JSON.parse(r);if(d.items&&d.items.length)items=d.items;if(d.nextId)nextId=d.nextId;if(d.currentUnit)currentUnit=d.currentUnit;if(typeof d.allowMixing==='boolean')allowMixing=d.allowMixing;if(d.sirinaRolne)document.getElementById('sirinaRolne').value=d.sirinaRolne;if(d.kerf)document.getElementById('kerfInput').value=d.kerf;if(d.safety)document.getElementById('safetyMargin').value=d.safety;if(d.cena)document.getElementById('cenaSavijanja').value=d.cena;document.getElementById('rolnaUnit').textContent=currentUnit;document.getElementById('thSirina').textContent='Width ('+currentUnit+')';document.getElementById('thDuzina').textContent='Length ('+currentUnit+')';document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('active',b.textContent===currentUnit));document.querySelectorAll('#mixToggle button').forEach((b,i)=>b.classList.toggle('active',allowMixing?i===0:i===1));return true}catch(e){return false}}
+
+function setUnit(unit){if(unit===currentUnit)return;const f=unit==='mm'?10:0.1;document.getElementById('sirinaRolne').value=Math.round(parseFloat(document.getElementById('sirinaRolne').value)*f*100)/100;items=items.map(i=>({...i,sirina:Math.round(i.sirina*f*100)/100,duzina:Math.round(i.duzina*f*100)/100}));currentUnit=unit;document.getElementById('rolnaUnit').textContent=unit;document.getElementById('thSirina').textContent='Width ('+unit+')';document.getElementById('thDuzina').textContent='Length ('+unit+')';document.querySelectorAll('#unitToggle button').forEach(b=>b.classList.toggle('active',b.textContent===unit));render()}
+function setMixMode(a){allowMixing=a;document.querySelectorAll('#mixToggle button').forEach((b,i)=>b.classList.toggle('active',a?i===0:i===1));calculate()}
+function addItem(){items.push({id:nextId++,kom:1,sirina:currentUnit==='mm'?100:10,duzina:currentUnit==='mm'?1000:100});render()}
+function removeItem(id){if(items.length<=1)return;items=items.filter(i=>i.id!==id);render()}
+function updateItem(id,field,value){items=items.map(i=>i.id===id?{...i,[field]:parseFloat(value)||0}:i);debouncedCalc()}
+
+function render(){
+  document.getElementById('itemsContainer').innerHTML=items.map((item,idx)=>{
+    const inv=item.kom<=0||item.sirina<=0||item.duzina<=0;
+    return`<div class="item-row ${inv?'invalid':''}"><span class="row-num">${String(idx+1).padStart(2,'0')}</span><input type="number" value="${item.kom}" min="1" aria-label="Qty ${idx+1}" oninput="updateItem(${item.id},'kom',this.value)"><input type="number" value="${item.sirina}" min="0.1" aria-label="Width ${idx+1}" oninput="updateItem(${item.id},'sirina',this.value)"><input type="number" value="${item.duzina}" min="0.1" aria-label="Length ${idx+1}" oninput="updateItem(${item.id},'duzina',this.value)"><button class="btn-remove ${items.length===1?'disabled':''}" aria-label="Remove ${idx+1}" onclick="removeItem(${item.id})">×</button></div>`;
+  }).join('');
+  calculate();
+}
+
+function calculate(){
+  const sirinaRolneMm=toMm(parseFloat(document.getElementById('sirinaRolne').value)||0);
+  const kerfMm=Math.round(parseFloat(document.getElementById('kerfInput').value)||0);
+  const safetyMm=Math.round(parseFloat(document.getElementById('safetyMargin').value)||0);
+  const usableWidthMm=sirinaRolneMm-safetyMm*2;
+
+  if(sirinaRolneMm<=0||usableWidthMm<=0){document.getElementById('resultsBody').innerHTML='<div style="padding:16px 24px;color:#ff5050">Enter a valid coil width.</div>';document.getElementById('totalSection').innerHTML='';lastShelfResults=[];lastUsableWidthMm=0;drawNesting();saveToLocal();return}
+
+  let bendingMm=0;const allStrips=[],errors=[],warnings=[];
+  items.forEach((item,idx)=>{const sMm=toMm(item.sirina),dMm=toMm(item.duzina),kom=Math.floor(item.kom);if(kom<=0||sMm<=0||dMm<=0){warnings.push(idx);return}if(sMm>usableWidthMm){errors.push(idx);return}bendingMm+=kom*dMm;for(let i=0;i<kom;i++)allStrips.push({sMm,dMm,stavkaIdx:idx,placed:false})});
+
+  allStrips.sort((a,b)=>b.dMm-a.dMm||b.sMm-a.sMm);
+  const shelves=[];
+  allStrips.forEach(strip=>{if(strip.placed)return;let best=-1,bestL=Infinity;for(let i=0;i<shelves.length;i++){const sh=shelves[i];if(!allowMixing&&strip.dMm!==sh.dMm)continue;if(strip.dMm>sh.dMm)continue;const n=sh.widthUsedMm+kerfMm+strip.sMm;if(n<=usableWidthMm){const l=usableWidthMm-n;if(l<bestL){bestL=l;best=i}}}if(best>=0){shelves[best].widthUsedMm+=kerfMm+strip.sMm;shelves[best].strips.push(strip);strip.placed=true}else{shelves.push({dMm:strip.dMm,widthUsedMm:strip.sMm,strips:[strip]});strip.placed=true}});
+
+  const shelfResults=shelves.map(shelf=>{const used=shelf.strips.reduce((s,st)=>s+st.sMm*st.dMm,0);const total=usableWidthMm*shelf.dMm;const byLen={};shelf.strips.forEach(st=>{if(!byLen[st.dMm])byLen[st.dMm]=[];byLen[st.dMm].push(st)});Object.values(byLen).forEach(a=>a.sort((a,b)=>b.sMm-a.sMm));return{...shelf,usedArea:used,totalArea:total,wasteArea:total-used,efficiency:total>0?used/total*100:0,byLen}});
+
+  lastShelfResults=shelfResults;lastUsableWidthMm=usableWidthMm;
+
+  const body=document.getElementById('resultsBody');let html='';
+  warnings.forEach(idx=>{html+=`<div style="padding:10px 24px;border-bottom:1px solid rgba(255,255,255,.04)"><span class="r-warn">⚠ Item ${idx+1} — invalid values, skipped</span></div>`});
+  errors.forEach(idx=>{const it=items[idx];html+=`<div style="padding:10px 24px;border-bottom:1px solid rgba(255,255,255,.04)"><span class="r-error">✕ Item ${idx+1} (${it.sirina} ${currentUnit}) — wider than usable width (${fmtMm(usableWidthMm)})!</span></div>`});
+
+  shelfResults.forEach((shelf,pi)=>{
+    const lengths=Object.keys(shelf.byLen).sort((a,b)=>b-a);const isMixed=lengths.length>1;let sd='';
+    lengths.forEach(len=>{const strips=shelf.byLen[len],w=strips.map(s=>fmtMm(s.sMm)).join(' + ');if(isMixed)sd+=`<div style="margin:2px 0"><span style="color:#5a6a8a;font-size:11px">@${fmtMm(+len)}:</span> <span class="r-value">${w}</span></div>`;else sd+=`<span class="r-value">${w}</span>`});
+    const ec=shelf.efficiency>85?'#4ecdc4':shelf.efficiency>60?'#e0c64f':'#ff9050';
+    const wd=shelf.wasteArea>=1e6?(shelf.wasteArea/1e6).toFixed(2)+' m²':shelf.wasteArea>=1e4?(shelf.wasteArea/1e4).toFixed(0)+' cm²':shelf.wasteArea+' mm²';
+    html+=`<div style="padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px;align-items:start">
+      <div><div style="margin-bottom:4px"><span class="r-dim">Pass ${pi+1}</span> <span class="r-accent">${fmtMm(shelf.dMm)}</span>${isMixed?'<span style="font-size:10px;background:rgba(78,205,196,.15);color:#4ecdc4;padding:2px 6px;border-radius:4px;margin-left:6px">COMBINED</span>':''}</div>${sd}</div>
+      <div class="r-value" style="padding-top:2px">efficiency: <span style="color:${ec};font-weight:600">${shelf.efficiency.toFixed(0)}%</span><div style="margin-top:4px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden"><div style="height:100%;width:${shelf.efficiency}%;background:${ec};border-radius:3px"></div></div></div>
+      <div class="r-right" style="padding-top:2px"><span class="r-dim">waste: </span><span style="color:${shelf.wasteArea>shelf.totalArea*.3?'#ff9050':'#5a6a8a'};font-weight:500">${wd}</span></div>
+    </div>`;
+  });
+  body.innerHTML=html;
+
+  const totLen=shelfResults.reduce((s,p)=>s+p.dMm,0);const totArea=shelfResults.reduce((s,p)=>s+p.totalArea,0);const usedArea=shelfResults.reduce((s,p)=>s+p.usedArea,0);
+  const eff=totArea>0?(usedArea/totArea*100).toFixed(1):0;const komb=shelfResults.filter(p=>Object.keys(p.byLen).length>1).length;
+  const bendM=(bendingMm/1000).toFixed(2);const cena=parseFloat(document.getElementById('cenaSavijanja').value)||0;const cenaTotal=(parseFloat(bendM)*cena).toFixed(2);
+  const safeNote=safetyMm>0?` · margin ${safetyMm}mm×2`:'';
+
+  document.getElementById('totalSection').innerHTML=`
+    <div class="total-bar"><div><span class="total-label">Total Coil Length</span><div class="total-sublabel">${shelfResults.length} passes${komb>0?` (${komb} combined)`:''} · efficiency ${eff}%${kerfMm>0?` · kerf ${kerfMm}mm`:''}${safeNote}</div></div><div style="text-align:right"><span class="total-num">${(totLen/1000).toFixed(2)}</span><span class="total-unit" style="color:#2ab7a9">m</span><div class="total-sub">(${fmtMm(totLen)})</div></div></div>
+    <div class="total-bar" style="background:rgba(224,198,79,.06)"><div><span class="total-label">Bending Service</span><div class="total-sublabel">sum (qty × length) of all profiles</div></div><div style="text-align:right"><span class="total-num-secondary">${bendM}</span><span class="total-unit" style="color:#c4a830">m</span><div class="total-sub">(${fmtMm(bendingMm)})</div></div></div>
+    <div class="total-bar" style="background:rgba(224,198,79,.04)"><div><span class="total-label">Bending Cost</span><div class="total-sublabel">${bendM} m × ${cena} USD/m</div></div><div style="text-align:right"><span class="total-num-secondary">${parseFloat(cenaTotal).toLocaleString('en-US',{minimumFractionDigits:2})}</span><span class="total-unit" style="color:#c4a830">USD</span></div></div>
+  `;
+  drawNesting();saveToLocal();
+}
+
+function drawNesting(){
+  const canvas=document.getElementById('nestingCanvas'),ctx=canvas.getContext('2d'),shelves=lastShelfResults,usableW=lastUsableWidthMm;
+  if(!shelves.length||usableW<=0){canvas.height=60;canvas.width=canvas.parentElement.clientWidth;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#3a4a6a';ctx.font='13px JetBrains Mono';ctx.textAlign='center';ctx.fillText('No data to display',canvas.width/2,35);return}
+  const cw=canvas.parentElement.clientWidth,pad=24,rowH=52,labelW=70,drawW=cw-pad*2-labelW,gap=8;
+  const totalH=pad+shelves.length*(rowH+gap)+pad;
+  canvas.width=cw;canvas.height=totalH;ctx.clearRect(0,0,cw,totalH);
+  const maxLen=Math.max(...shelves.map(s=>s.dMm)),scaleX=drawW/maxLen,scaleY=rowH/usableW;
+
+  shelves.forEach((shelf,si)=>{
+    const x0=pad+labelW,y0=pad+si*(rowH+gap),shelfW=Math.max(shelf.dMm*scaleX,1);
+    ctx.fillStyle='rgba(255,255,255,.03)';ctx.fillRect(x0,y0,shelfW,rowH);ctx.strokeStyle='rgba(255,255,255,.1)';ctx.strokeRect(x0,y0,shelfW,rowH);
+    let curY=0;const sorted=[...shelf.strips].sort((a,b)=>b.sMm-a.sMm);
+    sorted.forEach(strip=>{const sw=strip.dMm*scaleX,sh=strip.sMm*scaleY;ctx.fillStyle=COLORS[strip.stavkaIdx%COLORS.length];ctx.fillRect(x0,y0+curY,sw,sh);ctx.strokeStyle=COLORS_SOLID[strip.stavkaIdx%COLORS_SOLID.length];ctx.lineWidth=1;ctx.strokeRect(x0,y0+curY,sw,sh);if(sh>12&&sw>40){ctx.fillStyle='#fff';ctx.font='bold 10px JetBrains Mono';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(fmtMm(strip.sMm)+'×'+fmtMm(strip.dMm),x0+4,y0+curY+sh/2)}curY+=sh});
+    if(curY<rowH){ctx.fillStyle='rgba(255,80,80,.06)';ctx.fillRect(x0,y0+curY,shelfW,rowH-curY);ctx.strokeStyle='rgba(255,80,80,.15)';ctx.lineWidth=.5;for(let hx=0;hx<shelfW;hx+=8){ctx.beginPath();ctx.moveTo(x0+hx,y0+curY);ctx.lineTo(x0+hx+(rowH-curY),y0+rowH);ctx.stroke()}}
+    ctx.fillStyle='#5a6a8a';ctx.font='11px JetBrains Mono';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText('P'+(si+1),x0-8,y0+rowH/2);
+  });
+}
+
+loadFromLocal();render();
+</script>
+</body>
+</html>
