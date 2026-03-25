@@ -73,7 +73,7 @@
   .print-val{display:none}
   .btn-print{background:rgba(78,205,196,.08);border:1px solid rgba(78,205,196,.25);color:#4ecdc4;padding:10px 28px;border-radius:10px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:20px}
   .btn-print:hover{background:rgba(78,205,196,.18);border-color:rgba(78,205,196,.5)}
-  .eff-bar{}
+
   @media print{
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     body{background:#fff!important;color:#000!important;padding:16px!important;font-size:12px}
@@ -173,12 +173,12 @@
           <div class="field-input-row"><input type="number" id="cenaSavijanja" value="150" min="0" aria-label="Cena savijanja RSD/m" oninput="debouncedCalc()"><span class="field-unit">RSD/m</span></div>
         </div>
         <div class="field">
-          <label class="field-label">Mešanje dužina</label>
-          <div class="unit-toggle" id="mixToggle" role="group" aria-label="Režim mešanja"><button class="active" onclick="setMixMode(true)">Kombinuj</button><button onclick="setMixMode(false)">Strict</button></div>
+          <span class="field-label">Mešanje dužina</span>
+          <div class="unit-toggle" id="mixToggle" role="group" aria-label="Režim mešanja"><button type="button" class="active" onclick="setMixMode(true)">Kombinuj</button><button type="button" onclick="setMixMode(false)">Strict</button></div>
         </div>
         <div class="field">
-          <label class="field-label">Jedinica mere</label>
-          <div class="unit-toggle" id="unitToggle" role="group" aria-label="Izbor jedinice mere"><button class="active" onclick="setUnit('cm')">cm</button><button onclick="setUnit('mm')">mm</button></div>
+          <span class="field-label">Jedinica mere</span>
+          <div class="unit-toggle" id="unitToggle" role="group" aria-label="Izbor jedinice mere"><button type="button" class="active" onclick="setUnit('cm')">cm</button><button type="button" onclick="setUnit('mm')">mm</button></div>
         </div>
       </div>
     </div>
@@ -187,10 +187,10 @@
   <div class="card items-card">
     <div class="table-head"><span>#</span><span>Kom</span><span id="thSirina">Širina (cm)</span><span id="thDuzina">Dužina (cm)</span><span></span></div>
     <div id="itemsContainer"></div>
-    <div style="padding:0 24px 8px"><button class="btn-add" onclick="addItem()">+ Dodaj stavku</button></div>
+    <div style="padding:0 24px 8px"><button type="button" class="btn-add" onclick="addItem()">+ Dodaj stavku</button></div>
   </div>
 
-  <button class="btn-print" onclick="window.print()">Stampaj predracun</button>
+  <button type="button" class="btn-print" onclick="window.print()">Stampaj predracun</button>
 
   <div class="results">
     <div class="results-header"><div class="dot"></div><span>Rezultat proračuna</span></div>
@@ -326,7 +326,7 @@ function render() {
       <input type="number" value="${item.kom}" min="1" aria-label="Količina ${idx+1}" oninput="updateItem(${item.id},'kom',this.value)"><span class="print-val">${item.kom}</span>
       <input type="number" value="${item.sirina}" min="0.1" aria-label="Širina ${idx+1}" oninput="updateItem(${item.id},'sirina',this.value)"><span class="print-val">${item.sirina}</span>
       <input type="number" value="${item.duzina}" min="0.1" aria-label="Dužina ${idx+1}" oninput="updateItem(${item.id},'duzina',this.value)"><span class="print-val">${item.duzina}</span>
-      <button class="btn-remove ${items.length===1?'disabled':''}" aria-label="Obriši ${idx+1}" onclick="removeItem(${item.id})">×</button>
+      <button type="button" class="btn-remove ${items.length===1?'disabled':''}" aria-label="Obriši ${idx+1}" onclick="removeItem(${item.id})">×</button>
     </div>`;
   }).join('');
   calculate();
@@ -448,6 +448,7 @@ function calculate() {
 function drawNesting() {
   const canvas = document.getElementById('nestingCanvas');
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   const shelves = lastShelfResults;
   const usableW = lastUsableWidthMm;
 
