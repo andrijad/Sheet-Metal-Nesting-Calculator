@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kalkulator za proračun dužine lima iz rolne sa predračunom — shelf-packing algoritam za giljotinsko sečenje">
 <title>3MD Kalkulator lima</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
@@ -41,7 +42,7 @@
   .row-num{font-size:13px;color:#3a4a6a;font-weight:600}
   .btn-remove{background:none;border:1px solid rgba(255,80,80,.2);color:#ff5050;border-radius:8px;width:36px;height:36px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.6}
   .btn-remove:hover{opacity:1;background:rgba(255,80,80,.1)}
-  .btn-remove.disabled{opacity:.3;pointer-events:none}
+  .btn-remove:disabled{opacity:.3;cursor:not-allowed}
   .btn-add{background:rgba(78,205,196,.08);border:1px dashed rgba(78,205,196,.3);color:#4ecdc4;border-radius:10px;padding:10px 20px;cursor:pointer;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:500;transition:all .2s;width:100%;margin:16px 0}
   .btn-add:hover{background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.5)}
   .results{background:linear-gradient(135deg,rgba(78,205,196,.06),rgba(42,183,169,.03));border:1px solid rgba(78,205,196,.15);border-radius:16px;overflow:hidden;animation:fadeIn .4s ease-out}
@@ -73,7 +74,7 @@
   .print-val{display:none}
   .btn-print{background:rgba(78,205,196,.08);border:1px solid rgba(78,205,196,.25);color:#4ecdc4;padding:10px 28px;border-radius:10px;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:500;cursor:pointer;transition:all .2s;margin-bottom:20px}
   .btn-print:hover{background:rgba(78,205,196,.18);border-color:rgba(78,205,196,.5)}
-  .eff-bar{}
+
   @media print{
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     body{background:#fff!important;color:#000!important;padding:16px!important;font-size:12px}
@@ -173,12 +174,12 @@
           <div class="field-input-row"><input type="number" id="cenaSavijanja" value="150" min="0" aria-label="Cena savijanja RSD/m" oninput="debouncedCalc()"><span class="field-unit">RSD/m</span></div>
         </div>
         <div class="field">
-          <label class="field-label">Mešanje dužina</label>
-          <div class="unit-toggle" id="mixToggle" role="group" aria-label="Režim mešanja"><button class="active" onclick="setMixMode(true)">Kombinuj</button><button onclick="setMixMode(false)">Strict</button></div>
+          <span class="field-label">Mešanje dužina</span>
+          <div class="unit-toggle" id="mixToggle" role="group" aria-label="Režim mešanja"><button type="button" class="active" aria-pressed="true" onclick="setMixMode(true)">Kombinuj</button><button type="button" aria-pressed="false" onclick="setMixMode(false)">Strict</button></div>
         </div>
         <div class="field">
-          <label class="field-label">Jedinica mere</label>
-          <div class="unit-toggle" id="unitToggle" role="group" aria-label="Izbor jedinice mere"><button class="active" onclick="setUnit('cm')">cm</button><button onclick="setUnit('mm')">mm</button></div>
+          <span class="field-label">Jedinica mere</span>
+          <div class="unit-toggle" id="unitToggle" role="group" aria-label="Izbor jedinice mere"><button type="button" class="active" aria-pressed="true" onclick="setUnit('cm')">cm</button><button type="button" aria-pressed="false" onclick="setUnit('mm')">mm</button></div>
         </div>
       </div>
     </div>
@@ -187,10 +188,10 @@
   <div class="card items-card">
     <div class="table-head"><span>#</span><span>Kom</span><span id="thSirina">Širina (cm)</span><span id="thDuzina">Dužina (cm)</span><span></span></div>
     <div id="itemsContainer"></div>
-    <div style="padding:0 24px 8px"><button class="btn-add" onclick="addItem()">+ Dodaj stavku</button></div>
+    <div style="padding:0 24px 8px"><button type="button" class="btn-add" onclick="addItem()">+ Dodaj stavku</button></div>
   </div>
 
-  <button class="btn-print" onclick="window.print()">Stampaj predracun</button>
+  <button type="button" class="btn-print" onclick="window.print()">Štampaj predračun</button>
 
   <div class="results">
     <div class="results-header"><div class="dot"></div><span>Rezultat proračuna</span></div>
@@ -210,7 +211,7 @@
 </div>
 
 <div class="site-footer">
-  © 2025 <a href="#">AMMD WEB</a> · Sva prava zadržana
+  © 2026 <a href="#">AMMD WEB</a> · Sva prava zadržana
 </div>
 
 <script>
@@ -270,9 +271,17 @@ function loadFromLocal() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return false;
     const d = JSON.parse(raw);
-    if (d.items && d.items.length) items = d.items;
-    if (d.nextId) nextId = d.nextId;
-    if (d.currentUnit) currentUnit = d.currentUnit;
+    if (d.items && d.items.length) {
+      items = d.items.map(it => ({
+        id: parseInt(it.id) || 0,
+        kom: Math.max(0, parseFloat(it.kom) || 0),
+        sirina: Math.max(0, parseFloat(it.sirina) || 0),
+        duzina: Math.max(0, parseFloat(it.duzina) || 0),
+      })).filter(it => it.id > 0);
+    }
+    const maxItemId = items.reduce((m, it) => Math.max(m, it.id), 0);
+    nextId = Math.max(d.nextId || 1, maxItemId + 1);
+    if (d.currentUnit === 'cm' || d.currentUnit === 'mm') currentUnit = d.currentUnit;
     if (typeof d.allowMixing === 'boolean') allowMixing = d.allowMixing;
     if (d.sirinaRolne) document.getElementById('sirinaRolne').value = d.sirinaRolne;
     if (d.kerf) document.getElementById('kerfInput').value = d.kerf;
@@ -283,8 +292,8 @@ function loadFromLocal() {
     document.getElementById('rolnaUnit').textContent = currentUnit;
     document.getElementById('thSirina').textContent = 'Širina (' + currentUnit + ')';
     document.getElementById('thDuzina').textContent = 'Dužina (' + currentUnit + ')';
-    document.querySelectorAll('#unitToggle button').forEach(btn => btn.classList.toggle('active', btn.textContent === currentUnit));
-    document.querySelectorAll('#mixToggle button').forEach((btn, i) => btn.classList.toggle('active', allowMixing ? i === 0 : i === 1));
+    document.querySelectorAll('#unitToggle button').forEach(btn => { const a = btn.textContent === currentUnit; btn.classList.toggle('active', a); btn.setAttribute('aria-pressed', a); });
+    document.querySelectorAll('#mixToggle button').forEach((btn, i) => { const a = allowMixing ? i === 0 : i === 1; btn.classList.toggle('active', a); btn.setAttribute('aria-pressed', a); });
     return true;
   } catch(e) { return false; }
 }
@@ -299,21 +308,30 @@ function setUnit(unit) {
   document.getElementById('rolnaUnit').textContent = unit;
   document.getElementById('thSirina').textContent = 'Širina (' + unit + ')';
   document.getElementById('thDuzina').textContent = 'Dužina (' + unit + ')';
-  document.querySelectorAll('#unitToggle button').forEach(btn => btn.classList.toggle('active', btn.textContent === unit));
+  document.querySelectorAll('#unitToggle button').forEach(btn => {
+    const isActive = btn.textContent === unit;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive);
+  });
   render();
 }
 function setMixMode(allow) {
   allowMixing = allow;
-  document.querySelectorAll('#mixToggle button').forEach((btn, i) => btn.classList.toggle('active', allow ? i === 0 : i === 1));
+  document.querySelectorAll('#mixToggle button').forEach((btn, i) => {
+    const isActive = allow ? i === 0 : i === 1;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive);
+  });
   calculate();
 }
 function addItem() {
   items.push({ id: nextId++, kom: 1, sirina: currentUnit === 'mm' ? 100 : 10, duzina: currentUnit === 'mm' ? 1000 : 100 });
   render();
 }
-function removeItem(id) { if (items.length <= 1) return; items = items.filter(i => i.id !== id); render(); }
+function removeItem(id) { if (items.length <= 1) return; clearTimeout(debounceTimer); items = items.filter(i => i.id !== id); render(); }
 function updateItem(id, field, value) {
-  items = items.map(i => i.id === id ? { ...i, [field]: parseFloat(value) || 0 } : i);
+  const parsed = parseFloat(value) || 0;
+  items = items.map(i => i.id === id ? { ...i, [field]: Math.max(0, parsed) } : i);
   debouncedCalc();
 }
 
@@ -321,12 +339,12 @@ function render() {
   const c = document.getElementById('itemsContainer');
   c.innerHTML = items.map((item, idx) => {
     const inv = item.kom <= 0 || item.sirina <= 0 || item.duzina <= 0;
-    return `<div class="item-row ${inv ? 'invalid' : ''}">
+    return `<div class="item-row ${inv ? 'invalid' : ''}" data-item-id="${item.id}">
       <span class="row-num">${String(idx+1).padStart(2,'0')}</span>
-      <input type="number" value="${item.kom}" min="1" aria-label="Količina ${idx+1}" oninput="updateItem(${item.id},'kom',this.value)"><span class="print-val">${item.kom}</span>
-      <input type="number" value="${item.sirina}" min="0.1" aria-label="Širina ${idx+1}" oninput="updateItem(${item.id},'sirina',this.value)"><span class="print-val">${item.sirina}</span>
-      <input type="number" value="${item.duzina}" min="0.1" aria-label="Dužina ${idx+1}" oninput="updateItem(${item.id},'duzina',this.value)"><span class="print-val">${item.duzina}</span>
-      <button class="btn-remove ${items.length===1?'disabled':''}" aria-label="Obriši ${idx+1}" onclick="removeItem(${item.id})">×</button>
+      <input type="number" value="${item.kom}" min="1" data-field="kom" aria-label="Količina ${idx+1}"><span class="print-val">${item.kom}</span>
+      <input type="number" value="${item.sirina}" min="0.1" data-field="sirina" aria-label="Širina ${idx+1}"><span class="print-val">${item.sirina}</span>
+      <input type="number" value="${item.duzina}" min="0.1" data-field="duzina" aria-label="Dužina ${idx+1}"><span class="print-val">${item.duzina}</span>
+      <button type="button" class="btn-remove" ${items.length===1?'disabled':''} aria-label="Obriši ${idx+1}" data-remove-id="${item.id}">×</button>
     </div>`;
   }).join('');
   calculate();
@@ -335,7 +353,7 @@ function render() {
 // ========== MAIN CALCULATION ==========
 function calculate() {
   const sirinaRolneMm = toMm(parseFloat(document.getElementById('sirinaRolne').value) || 0);
-  const kerfMm = Math.round(parseFloat(document.getElementById('kerfInput').value) || 0);
+  const kerfMm = parseFloat(document.getElementById('kerfInput').value) || 0;
   const safetyMm = Math.round(parseFloat(document.getElementById('safetyMargin').value) || 0);
   const usableWidthMm = sirinaRolneMm - safetyMm * 2;
 
@@ -383,10 +401,11 @@ function calculate() {
   const shelfResults = shelves.map(shelf => {
     const usedArea = shelf.strips.reduce((s, st) => s + st.sMm * st.dMm, 0);
     const totalArea = usableWidthMm * shelf.dMm;
+    const kerfArea = shelf.strips.length > 1 ? (shelf.strips.length - 1) * kerfMm * shelf.dMm : 0;
     const byLen = {};
     shelf.strips.forEach(st => { if (!byLen[st.dMm]) byLen[st.dMm] = []; byLen[st.dMm].push(st); });
     Object.values(byLen).forEach(arr => arr.sort((a, b) => b.sMm - a.sMm));
-    return { ...shelf, usedArea, totalArea, wasteArea: totalArea - usedArea, efficiency: totalArea > 0 ? usedArea / totalArea * 100 : 0, byLen };
+    return { ...shelf, usedArea, kerfArea, totalArea, wasteArea: totalArea - usedArea - kerfArea, efficiency: totalArea > 0 ? (usedArea + kerfArea) / totalArea * 100 : 0, byLen };
   });
 
   lastShelfResults = shelfResults;
@@ -421,12 +440,14 @@ function calculate() {
   const totLen = shelfResults.reduce((s, p) => s + p.dMm, 0);
   const totArea = shelfResults.reduce((s, p) => s + p.totalArea, 0);
   const usedArea = shelfResults.reduce((s, p) => s + p.usedArea, 0);
-  const eff = totArea > 0 ? (usedArea / totArea * 100).toFixed(1) : 0;
+  const totKerfArea = shelfResults.reduce((s, p) => s + p.kerfArea, 0);
+  const eff = totArea > 0 ? ((usedArea + totKerfArea) / totArea * 100).toFixed(1) : 0;
   const komb = shelfResults.filter(p => Object.keys(p.byLen).length > 1).length;
-  const savM = (ukupnoSavijanjeMm / 1000).toFixed(2);
+  const savMRaw = ukupnoSavijanjeMm / 1000;
+  const savM = savMRaw.toFixed(2);
   const cena = parseFloat(document.getElementById('cenaSavijanja').value) || 0;
   const jedCenaVal = parseFloat(document.getElementById('jedCena').value) || 0;
-  const cenaTotal = Math.round(parseFloat(savM) * cena);
+  const cenaTotal = Math.round(savMRaw * cena);
   const cenaMaterijala = Math.round((totLen / 1000) * jedCenaVal);
   const ukupnaCena = cenaMaterijala + cenaTotal;
   const safeNote = safetyMm > 0 ? ` · ivica ${safetyMm}mm×2` : '';
@@ -448,6 +469,7 @@ function calculate() {
 function drawNesting() {
   const canvas = document.getElementById('nestingCanvas');
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   const shelves = lastShelfResults;
   const usableW = lastUsableWidthMm;
 
@@ -535,10 +557,31 @@ function drawNesting() {
   });
 }
 
+// ========== EVENT DELEGATION ==========
+function initDelegation() {
+  const c = document.getElementById('itemsContainer');
+  c.addEventListener('input', (e) => {
+    const row = e.target.closest('[data-item-id]');
+    if (!row) return;
+    const id = parseInt(row.dataset.itemId);
+    const field = e.target.dataset.field;
+    if (id && field) updateItem(id, field, e.target.value);
+  });
+  c.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-remove-id]');
+    if (!btn) return;
+    const id = parseInt(btn.dataset.removeId);
+    if (id) removeItem(id);
+  });
+}
+
 // ========== INIT ==========
 loadFromLocal();
+initDelegation();
 render();
 document.getElementById('printDate').textContent = new Date().toLocaleDateString('sr-RS');
+let resizeTimer;
+window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawNesting, 200); });
 </script>
 </body>
 </html>
