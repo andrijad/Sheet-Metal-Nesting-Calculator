@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══ TITLE TAG ═══ -->
+<title>CutTool — Blechcoil-Verschachtelungsrechner | Kostenloses Online-Tool</title>
+<!-- ═══ META DESCRIPTION ═══ -->
+<meta name="description" content="Blechzuschnitte in Sekunden planen. Profilangaben eingeben, Schnittdurchläufe, Effizienz und vollständige Preiskalkulation erhalten. Kostenlos, ohne Registrierung.">
+<!-- ═══ META KEYWORDS ═══ -->
+<meta name="keywords" content="Blechcoil Verschachtelung Rechner, Stahlcoil Längenkalkulator, Blechzuschnitt Rechner, Coil-Nesting Tool, Blechdach Zuschnitt Rechner">
+<!-- ═══ CANONICAL ═══ -->
+<link rel="canonical" href="https://yourdomain.com/coil-nesting-calculator">
+<!-- ═══ ROBOTS ═══ -->
+<meta name="robots" content="index, follow">
+<link rel="alternate" hreflang="en" href="https://cuttool.app/">
+<link rel="alternate" hreflang="sr" href="https://cuttool.app/sr/">
+<link rel="alternate" hreflang="de" href="https://cuttool.app/de/">
+<link rel="alternate" hreflang="fr" href="https://cuttool.app/fr/">
+<link rel="alternate" hreflang="it" href="https://cuttool.app/it/">
+<link rel="alternate" hreflang="es" href="https://cuttool.app/es/">
+<link rel="alternate" hreflang="x-default" href="https://cuttool.app/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://cuttool.app/de/#app",
+      "name": "CutTool — Blechcoil-Verschachtelungsrechner",
+      "alternateName": "CutTool",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Kostenloser Online-Rechner zur Planung von Blechcoil-Schnitten. Berechnet Schnittdurchläufe, Materialeffizienz, Verschnitt und Preiskalkulation.",
+      "url": "https://cuttool.app/de/",
+      "screenshot": "https://cuttool.app/og/cuttool-preview.png",
+      "inLanguage": "de",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "featureList": [
+        "Strict and Combined nesting algorithms",
+        "Metric (cm/mm) and imperial (inches) unit support",
+        "Visual cut pass layout",
+        "Material and cutting service cost estimate",
+        "Printable quote and CSV export"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Dachdecker, Fassadenmonteure, Metallverarbeitungsbetriebe, Kostenkalkulator"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cuttool.app/de/#webpage",
+      "url": "https://cuttool.app/de/",
+      "name": "CutTool — Blechcoil-Verschachtelungsrechner",
+      "description": "Blechzuschnitte in Sekunden planen. Profilangaben eingeben, Schnittdurchläufe, Effizienz und vollständige Preiskalkulation erhalten. Kostenlos, ohne Registrierung.",
+      "inLanguage": "de",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://cuttool.app/#website",
+        "url": "https://cuttool.app/",
+        "name": "CutTool"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "inLanguage": "de",
+      "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist Coil-Nesting und wie unterscheidet es sich von regulärer Nesting-Software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Coil-Nesting ist die Anordnung von Schneidprofilen entlang eines Metallcoils zur Minimierung von Materialverschnitt. Im Gegensatz zu Shape-Nesting-Software (ProNest, SigmaNEST) für Laser-/Plasmaschnitt ist CutTool speziell für Guillotineschnitt konzipiert — ohne CAD-Datei, ohne Unternehmenlizenz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie berechnet CutTool die benötigte Coillänge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CutTool gruppiert Profile in Schnittdurchläufe, addiert Schnittfugenverluste und Randabstände, und summiert die gesamte benötigte Coillänge. Das Ergebnis wird je Durchlauf aufgeschlüsselt. Formel für bekannte Coilabmessungen: codeL = π × (OD² − ID²) / (4 × t)/code"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist der Unterschied zwischen Strict und Kombiniert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "strongStrict/strong hält jede Profillänge in einem eigenen Durchlauf — einfach und sicher für jede Maschine. strongKombiniert/strong nutzt die verbleibende Coilbreite für kürzere Profile. Typisch 5–15% weniger Verschnitt, aber komplexerer Schnittplan. Beide berechnen und Effizienz vergleichen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich CutTool für verschiedene Materialien verwenden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. CutTool ist materialunabhängig. Geben Sie den Preis pro laufenden Meter für Ihr Material ein, und das Tool berechnet die Kosten entsprechend — für verzinkten Stahl, Kohlenstoffstahl, Aluminium und andere Blecharten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was bedeutet 'Effizienz' in den Ergebnissen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Durchlaufeffizienz ist der prozentuale Anteil der nutzbaren Coilbreite, der tatsächlich von Profilen belegt wird. Bei 125 cm Coilbreite und 108 cm belegter Breite beträgt die Effizienz 86,4 %. Die Gesamteffizienz ist der gewichtete Durchschnitt aller Durchläufe."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Speichert oder überträgt CutTool meine Daten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Alles läuft lokal in Ihrem Browser. Keine Profildaten, Abmessungen oder Preise werden an einen Server gesendet. Beim Schließen oder Aktualisieren der Seite werden alle Eingaben zurückgesetzt. Verwenden Sie die Schaltfläche 'Angebot drucken' zum PDF-Export."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist CutTool kostenlos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. CutTool ist vollständig kostenlos. Keine Registrierung, keine Testphase, keine Nutzungsbeschränkungen."
+      }
+    }
+      ]
+    }
+  ]
+}
+</script>
+<!-- ═══ OPEN GRAPH ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="CutTool — Blechcoil-Verschachtelungsrechner">
+<meta property="og:description" content="Kostenloses Online-Tool zur Planung von Blechcoil-Schnitten. Profil eingeben, Schnittdurchläufe und Preiskalkulation erhalten. Keine Registrierung erforderlich.">
+<meta property="og:url" content="https://yourdomain.com/coil-nesting-calculator">
+<meta property="og:image" content="https://yourdomain.com/og/cuttool-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="CutTool">
+<meta property="og:locale" content="de_DE">
+<!-- ═══ TWITTER CARD ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CutTool — Blechcoil-Verschachtelungsrechner">
+<meta name="twitter:description" content="Plan sheet metal coil cuts in seconds. Free online calculator for contractors and metal service centers.">
+<meta name="twitter:image" content="https://yourdomain.com/og/cuttool-preview.png">
+
+<!-- ═══ SCHEMA MARKUP ═══ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
+
+<style>
+/* ── TOKENS ── */
+:root {
+  /* ── COLOR SYSTEM ──────────────────────────────────────
+   * Two accents: --teal (metrics/lengths) --amber (money)
+   * Three text levels: --text  --text-2  --text-3
+   * Three surfaces: --bg  --bg2  --bg3  (dark→light steps)
+   * ──────────────────────────────────────────────────── */
+
+  /* Surfaces */
+  --bg:        #13151a;
+  --bg2:       #1e2128;
+  --bg3:       #272b34;
+  --surface:   rgba(255,255,255,.05);
+  --surface2:  rgba(255,255,255,.09);
+  --border:    rgba(255,255,255,.11);
+  --border2:   rgba(255,255,255,.2);
+
+  /* Accent — teal (cool, for lengths/metrics) */
+  --teal:      #2eb8ad;
+  --teal-dim:  rgba(46,184,173,.14);
+  --teal-glow: rgba(46,184,173,.1);
+
+  /* Accent — amber (warm, for prices) */
+  --amber:     #c49828;
+  --amber-dim: rgba(196,152,40,.12);
+
+  /* Text */
+  --text:      #dde2ea;
+  --text-2:    #9aa5b5;
+  --text-3:    #66788e;
+
+  /* Status */
+  --red:       #d95555;
+
+  /* Layout */
+  --input-h:   32px;
+  --radius:    8px;
+}
+
+/* ── LIGHT THEME ── */
+.light {
+  /* Surfaces */
+  --bg:        #f5f6f8;
+  --bg2:       #ffffff;
+  --bg3:       #ffffff;
+  --surface:   rgba(0,0,0,.04);
+  --surface2:  rgba(0,0,0,.07);
+  --border:    rgba(0,0,0,.12);
+  --border2:   rgba(0,0,0,.22);
+
+  /* Accent — teal */
+  --teal:      #0a8a83;
+  --teal-dim:  rgba(10,138,131,.09);
+  --teal-glow: rgba(10,138,131,.07);
+
+  /* Accent — amber */
+  --amber:     #906010;
+  --amber-dim: rgba(144,96,16,.09);
+
+  /* Text */
+  --text:      #0e1218;
+  --text-2:    #3a4555;
+  --text-3:    #8090a4;
+
+  /* Status */
+  --red:       #c02a2a;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: background .3s, color .3s;
+}
+
+/* ── LAYOUT ── */
+.wrap { max-width: 960px; margin: 0 auto; padding: 20px 16px 48px; }
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.header-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.header-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--teal), #228f8a);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(46,184,173,.18);
+}
+.header-icon svg { width: 20px; height: 20px; }
+.header h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header p {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+.header-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── ICON BUTTON ── */
+.icon-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+.icon-btn:hover { background: var(--surface2); border-color: var(--border2); color: var(--text); }
+.icon-btn svg { width: 16px; height: 16px; }
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+/* ── OPTIONS ACCORDION ── */
+.options-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all .2s;
+  margin-bottom: 0;
+}
+.options-toggle:hover { border-color: var(--border2); color: var(--text); }
+.options-toggle.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; margin-bottom: 0; }
+.options-toggle:not(.open) { margin-bottom: 16px; }
+.options-toggle-left { display: flex; align-items: center; gap: 8px; }
+.opts-chevron { transition: transform .2s; }
+.opts-chevron.open { transform: rotate(180deg); }
+
+.options-panel {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  margin-bottom: 12px;
+  padding: 12px 16px 14px;
+}
+.options-panel.open { display: block; }
+.opts-grid { display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr; gap:0; }
+.opts-col { display:flex; flex-direction:column; gap:10px; padding:0 16px; }
+.opts-col:first-child { padding-left:0; }
+.opts-col:last-child { padding-right:0; }
+.opts-sep { width:1px; background:var(--border); margin:0; align-self:stretch; }
+.field { display:flex; flex-direction:column; gap:4px; }
+.field-label { font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:.8px; font-family:'DM Sans',sans-serif; }
+.field-input-wrap { position:relative; display:flex; align-items:center; }
+.field-input-wrap input { width:100%; height:var(--input-h); background:var(--bg2); border:1px solid var(--border2); border-radius:var(--radius); color:var(--text); font-family:'DM Sans',sans-serif; font-variant-numeric:tabular-nums; font-size:14px; font-weight:500; padding:0 44px 0 9px; outline:none; transition:border-color .2s,box-shadow .2s; -moz-appearance:textfield; }
+.field-input-wrap input::-webkit-inner-spin-button,.field-input-wrap input::-webkit-outer-spin-button { -webkit-appearance:none; }
+.field-input-wrap input:focus { border-color:var(--teal); box-shadow:0 0 0 2px var(--teal-glow); }
+.field-unit { position:absolute; right:9px; color:var(--text-3); font-size:10px; font-family:'DM Sans',sans-serif; pointer-events:none; white-space:nowrap; }
+.toggle-group { display:inline-flex; background:var(--bg2); border:1px solid var(--border2); border-radius:var(--radius); overflow:hidden; height:var(--input-h); width:fit-content; }
+.toggle-group button { background:none; border:none; color:var(--text-3); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; padding:0 11px; cursor:pointer; transition:all .15s; white-space:nowrap; line-height:var(--input-h); }
+.toggle-group button.active { background:var(--teal-dim); color:var(--teal); }
+.toggle-group button:hover:not(.active) { background:var(--surface2); color:var(--text-2); }
+.opts-panel-inner { padding:12px 16px 14px; }
+
+/* ── ITEMS TABLE ── */
+.table-head {
+  display: grid;
+  grid-template-columns: 36px 1fr 1fr 1fr 40px;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.table-head span {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+.item-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 1fr 1fr 40px;
+  gap: 8px;
+  padding: 8px 16px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.03);
+  transition: background .15s;
+}
+.light .item-row { border-bottom-color: rgba(0,0,0,.04); }
+.item-row:hover { background: var(--surface2); }
+.item-row.invalid { background: rgba(200,60,60,.04); }
+.item-row.invalid input { border-color: rgba(200,60,60,.35) !important; }
+.item-row input {
+  width: 100%;
+  height: 30px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 8px;
+  outline: none;
+  transition: border-color .15s;
+  -moz-appearance: textfield;
+}
+.item-row input::-webkit-inner-spin-button,
+.item-row input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.item-row input:focus { border-color: var(--teal); }
+.number-display { font-variant-numeric: tabular-nums; }
+.row-num { font-size: 11px; color: var(--text-3); font-weight: 500;
+  font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums; text-align: center; }
+.btn-remove {
+  background: none;
+  border: 1px solid rgba(200,60,60,.22);
+  color: var(--red);
+  border-radius: 7px;
+  width: 32px; height: 32px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+  opacity: .55;
+}
+.btn-remove:hover { opacity: 1; background: rgba(200,60,60,.1); }
+.btn-remove:disabled { opacity: .25; cursor: not-allowed; }
+
+.btn-add {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 8px 16px;
+  height: 32px;
+  background: var(--teal-dim);
+  border: 1px dashed rgba(46,184,173,.3);
+  border-radius: 8px;
+  color: var(--teal);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-add:hover { background: rgba(46,184,173,.16); border-color: var(--teal); }
+
+/* ── RESULTS ── */
+.results {
+  background: var(--surface);
+  border: 1px solid rgba(46,184,173,.14);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.results-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(46,184,173,.09);
+}
+.results-header span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 6px rgba(46,184,173,.35); flex-shrink: 0; }
+
+/* Pass rows */
+.pass-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 100px;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 12px;
+}
+.pass-label { color: var(--text-3); font-size: 11px; }
+.pass-accent { color: var(--teal); font-weight: 600;   font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums;
+}
+.pass-widths { color: var(--text-2); margin-top: 2px;   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums;
+  font-size: 11px;
+}
+.eff-wrap { display: flex; flex-direction: column; gap: 3px; }
+.eff-label { font-weight: 600;   font-family: 'DM Sans', sans-serif; font-variant-numeric: tabular-nums;
+}
+.eff-bar-bg { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.eff-bar-fill { height: 100%; border-radius: 2px; transition: width .4s ease; }
+.pass-waste { text-align: right; }
+.pass-cols-header { display:grid; grid-template-columns:1fr 120px 100px; gap:8px; padding:6px 16px 5px; border-bottom:1px solid var(--border); }
+.pass-cols-header span { font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:.8px; font-family:'DM Sans',sans-serif; }
+.mixed-badge {
+  display: inline-block;
+  font-size: 9px;
+  background: var(--teal-dim);
+  color: var(--teal);
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 5px;
+  letter-spacing: .5px;
+  vertical-align: middle;
+}
+.r-warn { color: var(--amber); }
+.r-error { color: var(--red); }
+.r-dim { color: var(--text-3); }
+
+/* ── TOTALS ── */
+.total-section { border-top: 1px solid rgba(46,184,173,.09); }
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.total-row:last-child { border-bottom: none; }
+.total-row-label { font-size: 11px; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: .8px; }
+.total-row-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.total-row-val {
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.total-row-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+.total-row-num.teal { color: var(--teal); }
+.total-row-num.amber { color: var(--amber); }
+.total-row-unit { font-size: 12px; font-weight: 600; color: var(--text-3); }
+.total-row.highlight { background: rgba(46,184,173,.05); }
+.total-row.grand { background: rgba(196,152,40,.07); }
+.vat-note { padding: 7px 16px; font-size: 11px; color: var(--text-3); text-align: right; border-top: 1px solid var(--border); }
+
+/* ── PRINT BUTTON ── */
+/* ── BUTTON ROW (Print + Export) ── */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.btn-print, .btn-export {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 38px;
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.btn-print {
+  background: var(--teal-dim);
+  border: 1px solid rgba(46,184,173,.22);
+  color: var(--teal);
+}
+.btn-print:hover { background: rgba(46,184,173,.16); border-color: var(--teal); }
+.btn-export {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  color: var(--text-2);
+}
+.btn-export:hover { background: var(--surface2); color: var(--text); }
+
+/* ── CANVAS ── */
+.canvas-card { margin-bottom: 12px; }
+.canvas-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.canvas-header span { font-size: 10px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px; }
+#nestingCanvas { width: 100%; display: block; }
+
+/* ── LEGEND / FAQ / DESC ── */
+.section-card { padding: 24px 28px; }
+.section-card h2 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: -.2px;
+}
+.section-card p { color: var(--text-2); line-height: 1.75; margin-bottom: 12px; font-size: 14px; }
+.section-card p:last-child { margin-bottom: 0; }
+.section-card strong { color: var(--text); font-weight: 600; }
+.section-card code {
+  background: var(--surface2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--teal);
+}
+
+/* FAQ */
+.faq-list { list-style: none; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 13px 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  transition: color .15s;
+}
+.faq-q:hover { color: var(--teal); }
+.faq-chevron { flex-shrink: 0; transition: transform .2s; color: var(--text-3); }
+.faq-chevron.open { transform: rotate(180deg); color: var(--teal); }
+.faq-a {
+  display: none;
+  padding-bottom: 16px;
+  color: var(--text-2);
+  line-height: 1.75;
+  font-size: 14px;
+}
+.faq-a.open { display: block; }
+.faq-a p { margin-bottom: 10px; }
+.faq-a p:last-child { margin-bottom: 0; }
+
+/* Long description */
+.desc-content h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 22px 0 8px;
+}
+.desc-content h3:first-child { margin-top: 0; }
+.desc-content h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  margin: 16px 0 6px;
+}
+.desc-content ul { padding-left: 18px; margin: 6px 0 10px; }
+.desc-content li { color: var(--text-2); line-height: 1.75; font-size: 14px; margin-bottom: 5px; }
+.desc-content hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center;
+  padding: 24px 0 8px;
+  font-size: 10px;
+  color: var(--text-3);
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.site-footer a { color: var(--teal); text-decoration: none; }
+
+/* ── PRINT ── */
+.print-header { display: none; }
+.print-val { display: none; }
+
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff !important; color: #000 !important; padding: 16px !important; font-size: 12px; }
+  .wrap { max-width: 100%; }
+  .print-header { display: flex !important; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 2px solid #000; margin-bottom: 20px; }
+  .ph-name { font-size: 22px; font-weight: 800; font-family: 'DM Sans', sans-serif; }
+  .ph-meta { text-align: right; font-size: 11px; color: #444; }
+  .ph-doc-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .header { display: none !important; }
+  .options-toggle, .options-panel { display: none !important; }
+  .canvas-card { display: none !important; }
+  .site-footer { display: none !important; }
+  .btn-add { display: none !important; }
+  .btn-remove { display: none !important; }
+  .btn-print { display: none !important; }
+  .faq-list, .desc-content, .section-card.legend-wrap { display: none !important; }
+  .items-card { border: 1px solid #ddd !important; background: #fff !important; border-radius: 8px !important; margin-bottom: 16px !important; }
+  .table-head { background: #f0f0f0 !important; }
+  .table-head span { color: #222 !important; }
+  .item-row { background: #fff !important; border-bottom: 1px solid #eee !important; }
+  .item-row input { display: none !important; }
+  .print-val { display: inline !important; color: #000; font-size: 14px; font-weight: 600; }
+  .results { background: #fff !important; border: 1px solid #ddd !important; }
+  .pass-row { border-bottom: 1px solid #eee !important; }
+  .eff-bar-bg { display: none; }
+  .total-row { background: #f5f5f5 !important; border-bottom: 1px solid #ddd !important; }
+  .total-row-num { color: #000 !important; }
+  .total-row-label { color: #222 !important; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .wrap { padding: 12px 10px 40px; }
+  .header h1 { font-size: 15px; }
+  .opts-grid { grid-template-columns: 1fr 1fr; }
+  .table-head, .item-row { grid-template-columns: 28px 1fr 1fr 1fr 34px; gap: 5px; padding: 7px 10px; }
+  .pass-row { grid-template-columns: 1fr 100px; }
+  .pass-waste { display: none; }
+  .total-row-num { font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* ── LANG SWITCHER ── */
+.lang-switcher {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 10px;
+  height: 36px;
+  cursor: pointer;
+  transition: all .2s;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 72px;
+}
+.lang-switcher:hover { background: var(--surface2); }
+.lang-switcher option { background: var(--bg2); color: var(--text); }
+
+</style>
+</head>
+<body>
+
+<!-- PRINT HEADER -->
+<div class="print-header">
+  <div>
+    <div class="ph-name">CutTool</div>
+    <div style="font-size:11px;color:#555;margin-top:3px">Sheet Metal Coil Nesting Calculator</div>
+  </div>
+  <div class="ph-meta">
+    <div class="ph-doc-title">ANGEBOT</div>
+    <div>Datum: <span id="printDate"></span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="4" rx="1"/>
+          <rect x="3" y="10" width="12" height="4" rx="1"/>
+          <rect x="3" y="17" width="15" height="4" rx="1"/>
+        </svg>
+      </div>
+      <div>
+        <h1>CutTool — Coillängenberechnung für Blechprofile</h1>
+      </div>
+    </div>
+    <div class="header-actions">
+      <select class="lang-switcher" onchange="window.location.href=this.value" aria-label="Select language">
+<option value="/">🇬🇧 EN</option>
+<option value="/sr/">🇷🇸 SR</option>
+<option value="/de/" selected>🇩🇪 DE</option>
+<option value="/fr/">🇫🇷 FR</option>
+<option value="/it/">🇮🇹 IT</option>
+<option value="/es/">🇪🇸 ES</option>
+</select>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle light/dark">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- OPTIONS ACCORDION -->
+  <button class="options-toggle" id="optionsToggle" onclick="toggleOptions()" aria-expanded="false" aria-controls="optionsPanel">
+    <span class="options-toggle-left">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 2.93 19.07"/><path d="M4.93 4.93A10 10 0 0 1 19.07 19.07"/></svg>
+      Einstellungen
+    </span>
+    <svg class="opts-chevron" id="optsChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="options-panel" id="optionsPanel" role="region">
+    <div class="opts-grid">
+      <!-- COL 1: dimensions -->
+      <div class="opts-col">
+        <div class="field">
+          <label class="field-label" for="sirinaRolne">Coilbreite</label>
+          <div class="field-input-wrap">
+            <input type="number" id="sirinaRolne" value="1250" min="1" aria-label="Coil width" oninput="debouncedCalc()">
+            <span class="field-unit" id="rolnaUnit">mm</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="kerfInput">Schnittfuge</label>
+          <div class="field-input-wrap">
+            <input type="number" id="kerfInput" value="2" min="0" step="0.5" aria-label="Blade kerf mm" oninput="debouncedCalc()">
+            <span class="field-unit" id="kerfUnit">mm</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="safetyMargin">Randabstand (×2)</label>
+          <div class="field-input-wrap">
+            <input type="number" id="safetyMargin" value="5" min="0" step="1" aria-label="Edge margin mm per side" oninput="debouncedCalc()">
+            <span class="field-unit" id="safetyUnit">mm</span>
+          </div>
+        </div>
+      </div>
+      <!-- SEP -->
+      <div class="opts-sep"></div>
+      <!-- COL 2: pricing -->
+      <div class="opts-col">
+        <div class="field">
+          <label class="field-label" for="jedCena">Einzelpreis</label>
+          <div class="field-input-wrap">
+            <input type="number" id="jedCena" value="8" min="0" step="0.5" aria-label="Unit price" oninput="debouncedCalc()">
+            <span class="field-unit" id="jedCenaUnit">USD/m</span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="cenaSavijanja">Schnittkosten</label>
+          <div class="field-input-wrap">
+            <input type="number" id="cenaSavijanja" value="1.2" min="0" step="0.1" aria-label="Cutting cost per linear meter" oninput="debouncedCalc()">
+            <span class="field-unit" id="cenaSavanjaUnit">USD/m</span>
+          </div>
+        </div>
+      </div>
+      <!-- SEP -->
+      <div class="opts-sep"></div>
+      <!-- COL 3: toggles -->
+      <div class="opts-col">
+        <div class="field">
+          <label class="field-label">Schnittmethode</label>
+          <div class="toggle-group" id="mixToggle" role="group" aria-label="Mixing mode">
+            <button type="button" class="active" aria-pressed="true" onclick="setMixMode(false)">Strict</button>
+            <button type="button" aria-pressed="false" onclick="setMixMode(true)">Kombiniert</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">Maßsystem</label>
+          <div class="toggle-group" id="msToggle" role="group" aria-label="Measure system">
+            <button type="button" class="active" aria-pressed="true" onclick="setMeasureSystem('metric')">Metrisch</button>
+            <button type="button" aria-pressed="false" onclick="setMeasureSystem('imperial')">Imperial</button>
+          </div>
+        </div>
+        <div class="field" id="metricUnitField">
+          <label class="field-label">Einheit</label>
+          <div class="toggle-group" id="unitToggle" role="group" aria-label="Unit selection">
+            <button type="button" class="active" aria-pressed="true" onclick="setUnit('mm')">mm</button>
+            <button type="button" aria-pressed="false" onclick="setUnit('cm')">cm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITEMS TABLE -->
+  <div class="card items-card">
+    <div class="table-head">
+      <span>#</span><span>Anz.</span><span id="thSirina">Breite (mm)</span><span id="thDuzina">Länge (mm)</span><span></span>
+    </div>
+    <div id="itemsContainer"></div>
+    <button type="button" class="btn-add" onclick="addItem()">+ Position hinzufügen</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="resultsWrap">
+    <div class="results-header"><div class="dot"></div><span>Berechnungsergebnis</span></div>
+    <div class="pass-cols-header">
+      <span>Durchlauf / Profile</span>
+      <span>Effizienz</span>
+      <span style="text-align:right">Verschnitt</span>
+    </div>
+    <div id="resultsBody"></div>
+    <div class="total-section" id="totalSection"></div>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="btn-row">
+    <button type="button" class="btn-print" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> Angebot drucken</button>
+    <button type="button" class="btn-export" onclick="exportToCSV()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> CSV exportieren</button>
+  </div>
+
+  <!-- VISUAL NESTING -->
+  <div class="card canvas-card">
+    <div class="canvas-header"><div class="dot"></div><span>Visuelle Verschachtelung</span></div>
+    <canvas id="nestingCanvas"></canvas>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="card section-card legend-wrap">
+    <h2>So verwenden Sie CutTool</h2>
+    <div class="desc-content">
+
+    <p>Geben Sie die zu schneidenden Profile im Format <strong>Anzahl × Breite × Länge</strong> ein (z.B. <code>4 × 35 × 240</code>). Jedes Profil in eine neue Zeile.</p>
+    <p>Vor der Berechnung Einstellungen prüfen:</p>
+    <ul>
+      <li><strong>Coilbreite</strong> — Standard 125 cm; an Ihr tatsächliches Coil anpassen</li>
+      <li><strong>Schnittfuge</strong> — Materialverlust pro Schnitt (Standard 2 mm)</li>
+      <li><strong>Randabstand</strong> — Freiraum an beiden Coilkanten (Standard 2 mm je Seite)</li>
+    </ul>
+    <p><strong>Schnittmethoden:</strong></p>
+    <ul>
+      <li><strong>Strict</strong> — jede Profillänge erhält einen eigenen Durchlauf. Einfach auf jeder Maschine ausführbar.</li>
+      <li><strong>Kombiniert</strong> — kürzere Profile werden in den Restbereich des gleichen Durchlaufs eingefügt. Erhöht die Effizienz, erfordert aber Guillotinenschnitte von Kante zu Kante. Prüfen Sie vorher, ob Ihre Maschine dies unterstützt.</li>
+    </ul>
+    <p>CutTool zeigt automatisch die Durchlaufanordnung, Effizienz je Durchlauf, Gesamtverschnitt und vollständige Preiskalkulation. Klicken Sie auf <strong>Angebot drucken</strong> zum PDF-Export.</p>
+
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="card section-card">
+    <h2>Häufig gestellte Fragen</h2>
+    <ul class="faq-list" id="faqList">
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Was ist Coil-Nesting und wie unterscheidet es sich von regulärer Nesting-Software?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Coil-Nesting ist die Anordnung von Schneidprofilen entlang eines Metallcoils zur Minimierung von Materialverschnitt. Im Gegensatz zu Shape-Nesting-Software (ProNest, SigmaNEST) für Laser-/Plasmaschnitt ist CutTool speziell für Guillotineschnitt konzipiert — ohne CAD-Datei, ohne Unternehmenlizenz.</p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Wie berechnet CutTool die benötigte Coillänge?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>CutTool gruppiert Profile in Schnittdurchläufe, addiert Schnittfugenverluste und Randabstände, und summiert die gesamte benötigte Coillänge. Das Ergebnis wird je Durchlauf aufgeschlüsselt. Formel für bekannte Coilabmessungen: <code>L = π × (OD² − ID²) / (4 × t)</code></p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Was ist der Unterschied zwischen Strict und Kombiniert?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p><strong>Strict</strong> hält jede Profillänge in einem eigenen Durchlauf — einfach und sicher für jede Maschine. <strong>Kombiniert</strong> nutzt die verbleibende Coilbreite für kürzere Profile. Typisch 5–15% weniger Verschnitt, aber komplexerer Schnittplan. Beide berechnen und Effizienz vergleichen.</p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Kann ich CutTool für verschiedene Materialien verwenden?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Ja. CutTool ist materialunabhängig. Geben Sie den Preis pro laufenden Meter für Ihr Material ein, und das Tool berechnet die Kosten entsprechend — für verzinkten Stahl, Kohlenstoffstahl, Aluminium und andere Blecharten.</p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Was bedeutet 'Effizienz' in den Ergebnissen?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Die Durchlaufeffizienz ist der prozentuale Anteil der nutzbaren Coilbreite, der tatsächlich von Profilen belegt wird. Bei 125 cm Coilbreite und 108 cm belegter Breite beträgt die Effizienz 86,4 %. Die Gesamteffizienz ist der gewichtete Durchschnitt aller Durchläufe.</p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Speichert oder überträgt CutTool meine Daten?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Nein. Alles läuft lokal in Ihrem Browser. Keine Profildaten, Abmessungen oder Preise werden an einen Server gesendet. Beim Schließen oder Aktualisieren der Seite werden alle Eingaben zurückgesetzt. Verwenden Sie die Schaltfläche 'Angebot drucken' zum PDF-Export.</p></div>
+      </li>
+      <li class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Ist CutTool kostenlos?
+          <svg class="faq-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Ja. CutTool ist vollständig kostenlos. Keine Registrierung, keine Testphase, keine Nutzungsbeschränkungen.</p></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- LONG DESCRIPTION -->
+  <div class="card section-card">
+        <h2>CutTool — Blechcoil-Verschachtelungsrechner</h2>
+    <div class="desc-content">
+      <p><strong>Coilschnitte in Sekunden planen. Druckfertiges Angebot ohne Tabellenkalkulation.</strong></p><p>Beim Schneiden von Profilen aus einem Stahlcoil muss jeder Maschinendurchlauf im Voraus geplant werden. CutTool erledigt diese Berechnung automatisch, im Browser, kostenlos.</p>
+      <hr>
+      <h3>Was CutTool berechnet</h3>
+      <p>Profilliste eingeben — Anzahl, Breite, Länge. CutTool ordnet sie mithilfe eines Shelf-Packing-Algorithmus in Schnittdurchläufe an:</p><ul><li>Berücksichtigt Schnittfugenverluste und Randabstände</li><li>Gruppiert Profile mit Strict- oder Kombiniert-Methode</li><li>Berechnet die benötigte Gesamtcoillänge</li><li>Zeigt Effizienz und Verschnitt je Durchlauf</li><li>Fügt Material- und Servicekosten hinzu</li></ul>
+      <hr>
+      <h3>Wer CutTool nutzt</h3>
+      <h4>Dachdecker und Fassadenmonteure</h4>
+      <p>Statt dem Schnittplan auf Papier: Spezifikation eingeben und Schnittplan direkt an den Maschinenführer übergeben.</p>
+      <h4>Metallservicezentren und Zuschnittlieferanten</h4>
+      <p>Kundenvorgabe eingeben, Preise festlegen, Drucken klicken — Angebot fertig.</p>
+      <h4>Kalkulatoren und Bauleiter</h4>
+      <p>CutTool liefert schnell zuverlässige Coillängen- und Kostenschätzungen vor der Bestellung.</p>
+      <hr>
+      <h3>Kein Konto, keine Installation, keine Datenspeicherung</h3>
+      <p>CutTool läuft vollständig im Browser. Nichts zu installieren, nichts zu registrieren, nichts wird auf einem Server gespeichert.</p>
+    </div>
+  </div>
+
+  <div class="site-footer">© 2026 <a href="#">AMMD WEB</a> · <a href="#privacy-policy" onclick="togglePrivacy()">Datenschutz</a> · <a href="https://cuttool.app/sitemap.xml">Sitemap</a> · Alle Rechte vorbehalten</div>
+
+  <!-- PRIVACY POLICY -->
+  <div id="privacy-modal" style="display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);backdrop-filter:blur(3px)" onclick="if(event.target===this)togglePrivacy()">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:560px;width:calc(100% - 32px);max-height:80vh;overflow-y:auto;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:28px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--text)">Datenschutzerklärung</h2>
+        <button onclick="togglePrivacy()" style="background:none;border:none;color:var(--text-3);font-size:20px;cursor:pointer;line-height:1">×</button>
+      </div>
+      <p style="font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:10px">CutTool verarbeitet alle Daten <strong style="color:var(--text)">lokal in Ihrem Browser</strong>. Keine Profildaten, Preise oder Berechnungsergebnisse werden an einen Server übertragen oder in einer Datenbank gespeichert.</p>
+      <p style="font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:10px">Die einzigen Daten, die auf Ihrem Gerät gespeichert werden, sind Ihre zuletzt verwendeten Einstellungen (Coilbreite, Preise, Einheitenpräferenzen), gespeichert in <code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:12px;color:var(--teal)">localStorage</code>. Diese Daten verlassen niemals Ihr Gerät.</p>
+      <p style="font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:10px">CutTool verwendet keine Tracking-Cookies, Analyseskripte oder Drittanbieter-Werbung. Die einzige externe Ressource ist die Schriftart DM Sans von Google Fonts.</p>
+      <p style="font-size:14px;color:var(--text-2);line-height:1.7">Es werden keine personenbezogenen Daten erfasst. Kein Konto erforderlich. Keine Datenweitergabe an Dritte.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentUnit = 'mm';
+let measureSystem = 'metric';
+let allowMixing = false; // Strict default
+let items = [
+  { id: 1, kom: 2, sirina: 330, duzina: 2000 },
+  { id: 2, kom: 3, sirina: 270, duzina: 1500 },
+  { id: 3, kom: 17, sirina: 100, duzina: 4000 },
+];
+let nextId = 4;
+let debounceTimer = null;
+let lastShelfResults = [];
+let lastUsableWidthMm = 0;
+let isDark = true;
+
+/* Canvas palette: 6 muted tones — blue-steel, slate-blue, warm-tan, rose-gray, ochre, dusty-teal */
+const COLORS = ['rgba(80,130,180,.42)','rgba(150,120,190,.38)','rgba(190,150,90,.4)','rgba(180,100,100,.38)','rgba(100,150,170,.4)','rgba(190,160,80,.38)'];
+const COLORS_SOLID = ['#4e7fa8','#8a6db0','#b89040','#a85858','#5890a0','#b09830'];
+
+function debouncedCalc() { clearTimeout(debounceTimer); debounceTimer = setTimeout(calculate, 150); }
+
+function toMm(val) {
+  if (measureSystem === 'imperial') return Math.round(val * 25.4);
+  return currentUnit === 'mm' ? Math.round(val) : Math.round(val * 10);
+}
+function fmtMm(mm) {
+  if (measureSystem === 'imperial') {
+    const inches = mm / 25.4;
+    return inches >= 12 ? (inches/12).toFixed(2)+' ft' : inches.toFixed(2)+'"';
+  }
+  if (mm >= 1000) return (mm/1000).toFixed(2)+' m';
+  if (currentUnit === 'mm') return mm+' mm';
+  return (mm/10).toFixed(1)+' cm';
+}
+
+function toggleTheme() {
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  localStorage.setItem('ct_theme_de', isDark ? 'dark' : 'light');
+  const ic = document.getElementById('themeIcon');
+  if (!isDark) {
+    ic.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  } else {
+    ic.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  }
+}
+
+function toggleOptions() {
+  const panel = document.getElementById('optionsPanel');
+  const toggle = document.getElementById('optionsToggle');
+  const chevron = document.getElementById('optsChevron');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  toggle.setAttribute('aria-expanded', !isOpen);
+}
+
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const chevron = btn.querySelector('.faq-chevron');
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function setMeasureSystem(sys) {
+  measureSystem = sys;
+  document.querySelectorAll('#msToggle button').forEach((b, i) => {
+    const a = sys === 'metric' ? i === 0 : i === 1;
+    b.classList.toggle('active', a);
+    b.setAttribute('aria-pressed', a);
+  });
+  const metricField = document.getElementById('metricUnitField');
+  metricField.style.display = sys === 'imperial' ? 'none' : '';
+  const unitLabel = sys === 'imperial' ? 'in' : currentUnit;
+  document.getElementById('rolnaUnit').textContent = unitLabel;
+  document.getElementById('thSirina').textContent = 'Breite (' + unitLabel + ')';
+  document.getElementById('thDuzina').textContent = 'Länge (' + unitLabel + ')';
+  // Update option fields that always show mm-based units
+  const kerfUnit = sys === 'imperial' ? 'in' : 'mm';
+  const safetyUnit = sys === 'imperial' ? 'in' : 'mm';
+  const priceUnit = sys === 'imperial' ? 'EUR/ft' : 'EUR/m';
+  document.getElementById('kerfUnit').textContent = kerfUnit;
+  document.getElementById('safetyUnit').textContent = safetyUnit;
+  document.getElementById('jedCenaUnit').textContent = priceUnit;
+  document.getElementById('cenaSavanjaUnit').textContent = priceUnit;
+  saveToLocal();
+  calculate();
+}
+
+function setUnit(unit) {
+  if (unit === currentUnit) return;
+  const f = unit === 'mm' ? 10 : 0.1;
+  const rolnaEl = document.getElementById('sirinaRolne');
+  rolnaEl.value = Math.round(parseFloat(rolnaEl.value) * f * 100) / 100;
+  items = items.map(i => ({ ...i, sirina: Math.round(i.sirina * f * 100) / 100, duzina: Math.round(i.duzina * f * 100) / 100 }));
+  currentUnit = unit;
+  document.getElementById('rolnaUnit').textContent = unit;
+  document.getElementById('thSirina').textContent = 'Breite (' + unit + ')';
+  document.getElementById('thDuzina').textContent = 'Länge (' + unit + ')';
+  document.querySelectorAll('#unitToggle button').forEach(b => {
+    const a = b.textContent === unit;
+    b.classList.toggle('active', a);
+    b.setAttribute('aria-pressed', a);
+  });
+  // Keep coil width unit label in sync
+  document.getElementById('rolnaUnit').textContent = unit;
+  render();
+}
+
+function setMixMode(a) {
+  allowMixing = a;
+  document.querySelectorAll('#mixToggle button').forEach((b, i) => {
+    const act = a ? i === 1 : i === 0;
+    b.classList.toggle('active', act);
+    b.setAttribute('aria-pressed', act);
+  });
+  calculate();
+}
+
+function addItem() {
+  const defS = measureSystem === 'imperial' ? 4 : (currentUnit === 'mm' ? 100 : 10);
+  const defD = measureSystem === 'imperial' ? 40 : (currentUnit === 'mm' ? 1000 : 100);
+  items.push({ id: nextId++, kom: 1, sirina: defS, duzina: defD });
+  render();
+}
+function removeItem(id) { if (items.length <= 1) return; clearTimeout(debounceTimer); items = items.filter(i => i.id !== id); render(); }
+function updateItem(id, field, value) {
+  const parsed = parseFloat(value) || 0;
+  items = items.map(i => i.id === id ? { ...i, [field]: Math.max(0, parsed) } : i);
+  debouncedCalc();
+}
+
+const LS_KEY = 'cuttool_de';
+function saveToLocal() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ items, currentUnit, measureSystem, allowMixing, nextId, sirinaRolne: document.getElementById('sirinaRolne').value, kerf: document.getElementById('kerfInput').value, safety: document.getElementById('safetyMargin').value, cena: document.getElementById('cenaSavijanja').value, jedCena: document.getElementById('jedCena').value })); } catch(e) {}
+}
+function loadFromLocal() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    if (d.items && d.items.length) items = d.items.map(it => ({ id: parseInt(it.id)||0, kom: Math.max(0, parseFloat(it.kom)||0), sirina: Math.max(0, parseFloat(it.sirina)||0), duzina: Math.max(0, parseFloat(it.duzina)||0) })).filter(it => it.id > 0);
+    const maxId = items.reduce((m, it) => Math.max(m, it.id), 0);
+    nextId = Math.max(d.nextId || 1, maxId + 1);
+    if (d.currentUnit === 'cm' || d.currentUnit === 'mm') currentUnit = d.currentUnit;
+    if (d.measureSystem === 'metric' || d.measureSystem === 'imperial') measureSystem = d.measureSystem;
+    if (typeof d.allowMixing === 'boolean') allowMixing = d.allowMixing;
+    if (d.sirinaRolne) document.getElementById('sirinaRolne').value = d.sirinaRolne;
+    if (d.kerf) document.getElementById('kerfInput').value = d.kerf;
+    if (d.safety) document.getElementById('safetyMargin').value = d.safety;
+    if (d.cena) document.getElementById('cenaSavijanja').value = d.cena;
+    if (d.jedCena) document.getElementById('jedCena').value = d.jedCena;
+    const unitLabel = measureSystem === 'imperial' ? 'in' : currentUnit;
+    document.getElementById('rolnaUnit').textContent = unitLabel;
+    document.getElementById('thSirina').textContent = 'Breite (' + unitLabel + ')';
+    document.getElementById('thDuzina').textContent = 'Länge (' + unitLabel + ')';
+    document.querySelectorAll('#unitToggle button').forEach(b => { const a = b.textContent === currentUnit; b.classList.toggle('active', a); b.setAttribute('aria-pressed', a); });
+    document.querySelectorAll('#mixToggle button').forEach((b, i) => { const act = allowMixing ? i === 1 : i === 0; b.classList.toggle('active', act); b.setAttribute('aria-pressed', act); });
+    document.querySelectorAll('#msToggle button').forEach((b, i) => { const a = measureSystem === 'metric' ? i === 0 : i === 1; b.classList.toggle('active', a); b.setAttribute('aria-pressed', a); });
+    if (measureSystem === 'imperial') document.getElementById('metricUnitField').style.display = 'none';
+    return true;
+  } catch(e) { return false; }
+}
+
+function render() {
+  document.getElementById('itemsContainer').innerHTML = items.map((item, idx) => {
+    const inv = item.kom <= 0 || item.sirina <= 0 || item.duzina <= 0;
+    return `<div class="item-row ${inv?'invalid':''}" data-item-id="${item.id}">
+      <span class="row-num">${String(idx+1).padStart(2,'0')}</span>
+      <input type="number" value="${item.kom}" min="1" data-field="kom" aria-label="Qty ${idx+1}"><span class="print-val">${item.kom}</span>
+      <input type="number" value="${item.sirina}" min="0.1" data-field="sirina" aria-label="Width ${idx+1}"><span class="print-val">${item.sirina}</span>
+      <input type="number" value="${item.duzina}" min="0.1" data-field="duzina" aria-label="Length ${idx+1}"><span class="print-val">${item.duzina}</span>
+      <button type="button" class="btn-remove" ${items.length===1?'disabled':''} aria-label="Remove ${idx+1}" data-remove-id="${item.id}">×</button>
+    </div>`;
+  }).join('');
+  calculate();
+}
+
+function calculate() {
+  const sirinaRolneMm = toMm(parseFloat(document.getElementById('sirinaRolne').value) || 0);
+  const kerfMm = parseFloat(document.getElementById('kerfInput').value) || 0;
+  const safetyMm = Math.round(parseFloat(document.getElementById('safetyMargin').value) || 0);
+  const usableWidthMm = sirinaRolneMm - safetyMm * 2;
+
+  if (sirinaRolneMm <= 0 || usableWidthMm <= 0) {
+    document.getElementById('resultsBody').innerHTML = '<div style="padding:12px 16px;color:var(--red);font-size:12px">Bitte gültige Coilbreite eingeben.</div>';
+    document.getElementById('totalSection').innerHTML = '';
+    lastShelfResults = []; lastUsableWidthMm = 0; drawNesting(); saveToLocal(); return;
+  }
+
+  let bendingMm = 0;
+  const allStrips = [], errors = [], warnings = [];
+  items.forEach((item, idx) => {
+    const sMm = toMm(item.sirina), dMm = toMm(item.duzina), kom = Math.floor(item.kom);
+    if (kom <= 0 || sMm <= 0 || dMm <= 0) { warnings.push(idx); return; }
+    if (sMm > usableWidthMm) { errors.push(idx); return; }
+    bendingMm += kom * dMm;
+    for (let i = 0; i < kom; i++) allStrips.push({ sMm, dMm, stavkaIdx: idx, placed: false });
+  });
+
+  allStrips.sort((a, b) => b.dMm - a.dMm || b.sMm - a.sMm);
+  const shelves = [];
+  allStrips.forEach(strip => {
+    if (strip.placed) return;
+    let best = -1, bestL = Infinity;
+    for (let i = 0; i < shelves.length; i++) {
+      const sh = shelves[i];
+      if (!allowMixing && strip.dMm !== sh.dMm) continue;
+      if (strip.dMm > sh.dMm) continue;
+      const n = sh.widthUsedMm + kerfMm + strip.sMm;
+      if (n <= usableWidthMm) { const l = usableWidthMm - n; if (l < bestL) { bestL = l; best = i; } }
+    }
+    if (best >= 0) { shelves[best].widthUsedMm += kerfMm + strip.sMm; shelves[best].strips.push(strip); strip.placed = true; }
+    else { shelves.push({ dMm: strip.dMm, widthUsedMm: strip.sMm, strips: [strip] }); strip.placed = true; }
+  });
+
+  const shelfResults = shelves.map(shelf => {
+    const usedArea = shelf.strips.reduce((s, st) => s + st.sMm * st.dMm, 0);
+    const totalArea = usableWidthMm * shelf.dMm;
+    const kerfArea = shelf.strips.length > 1 ? (shelf.strips.length - 1) * kerfMm * shelf.dMm : 0;
+    const byLen = {};
+    shelf.strips.forEach(st => { if (!byLen[st.dMm]) byLen[st.dMm] = []; byLen[st.dMm].push(st); });
+    Object.values(byLen).forEach(a => a.sort((a, b) => b.sMm - a.sMm));
+    return { ...shelf, usedArea, kerfArea, totalArea, wasteArea: totalArea - usedArea - kerfArea, efficiency: totalArea > 0 ? (usedArea + kerfArea) / totalArea * 100 : 0, byLen };
+  });
+
+  lastShelfResults = shelfResults; lastUsableWidthMm = usableWidthMm;
+
+  const body = document.getElementById('resultsBody');
+  let html = '';
+  warnings.forEach(idx => { html += `<div style="padding:8px 16px;border-bottom:1px solid var(--border);font-size:11px"><span class="r-warn">⚠ Item ${idx+1} — ungültige Werte, übersprungen</span></div>`; });
+  errors.forEach(idx => { const it = items[idx]; html += `<div style="padding:8px 16px;border-bottom:1px solid var(--border);font-size:11px"><span class="r-error">✕ Item ${idx+1} (${it.sirina}) — breiter als nutzbare Breite (${fmtMm(usableWidthMm)})</span></div>`; });
+
+  shelfResults.forEach((shelf, pi) => {
+    const lengths = Object.keys(shelf.byLen).sort((a, b) => b - a);
+    const isMixed = lengths.length > 1;
+    let widthsHtml = '';
+    lengths.forEach(len => {
+      const strips = shelf.byLen[len];
+      const w = strips.map(s => fmtMm(s.sMm)).join(' + ');
+      if (isMixed) widthsHtml += `<div style="color:var(--text-3);font-size:10px">@${fmtMm(+len)}:</div><div class="pass-widths">${w}</div>`;
+      else widthsHtml += `<div class="pass-widths">${w}</div>`;
+    });
+    const ec = shelf.efficiency > 80 ? 'var(--teal)' : shelf.efficiency > 55 ? 'var(--amber)' : 'var(--red)';
+    let wd;
+    if (measureSystem === 'imperial') {
+      const wdIn2 = shelf.wasteArea / (25.4*25.4);
+      wd = wdIn2 >= 144 ? (wdIn2/144).toFixed(2)+' ft²' : wdIn2.toFixed(1)+' in²';
+    } else {
+      wd = shelf.wasteArea >= 1e6 ? (shelf.wasteArea/1e6).toFixed(2)+' m²' : shelf.wasteArea >= 1e4 ? (shelf.wasteArea/1e4).toFixed(0)+' cm²' : shelf.wasteArea+' mm²';
+    }
+    html += `<div class="pass-row">
+      <div>
+        <div><span class="r-dim" style="font-size:10px">Pass ${pi+1}</span> <span class="pass-accent">${fmtMm(shelf.dMm)}</span>${isMixed?'<span class="mixed-badge">COMBINED</span>':''}</div>
+        ${widthsHtml}
+      </div>
+      <div class="eff-wrap">
+        <span class="eff-label" style="color:${ec};font-size:12px">${shelf.efficiency.toFixed(0)}%</span>
+        <div class="eff-bar-bg"><div class="eff-bar-fill" style="width:${shelf.efficiency}%;background:${ec}"></div></div>
+      </div>
+      <div class="pass-waste r-dim" style="text-align:right;font-size:11px;color:${shelf.wasteArea > shelf.totalArea*.3?'var(--red)':'var(--text-3)'}">Verschnitt: ${wd}</div>
+    </div>`;
+  });
+  body.innerHTML = html;
+
+  const totLen = shelfResults.reduce((s, p) => s + p.dMm, 0);
+  const totArea = shelfResults.reduce((s, p) => s + p.totalArea, 0);
+  const usedArea = shelfResults.reduce((s, p) => s + p.usedArea, 0);
+  const totKerfArea = shelfResults.reduce((s, p) => s + p.kerfArea, 0);
+  const eff = totArea > 0 ? ((usedArea + totKerfArea) / totArea * 100).toFixed(1) : 0;
+  const komb = shelfResults.filter(p => Object.keys(p.byLen).length > 1).length;
+  const bendMRaw = bendingMm / 1000;
+  const bendM = bendMRaw.toFixed(2);
+  const cena = parseFloat(document.getElementById('cenaSavijanja').value) || 0;
+  const jedCenaVal = parseFloat(document.getElementById('jedCena').value) || 0;
+  const cenaTotal = Math.round(bendMRaw * cena);
+  const cenaMaterijala = Math.round((totLen / 1000) * jedCenaVal);
+  const ukupnaCena = cenaMaterijala + cenaTotal;
+  const currency = 'EUR';
+  const safeNote = safetyMm > 0 ? ` · margin ${safetyMm}${measureSystem==='imperial'?'in':'mm'}×2` : '';
+
+  const lenUnit = measureSystem === 'imperial' ? 'ft' : 'm';
+  const lenVal = measureSystem === 'imperial' ? (totLen/304.8).toFixed(2) : (totLen/1000).toFixed(2);
+  const bendVal = measureSystem === 'imperial' ? (bendMRaw*3.28084).toFixed(2) : bendM;
+  const priceUnit = measureSystem === 'imperial' ? currency+'/ft' : currency+'/m';
+  const matSubLabel = lenVal + ' ' + lenUnit + ' × ' + jedCenaVal + ' ' + priceUnit;
+  const cutSubLabel = bendVal + ' ' + lenUnit + ' × ' + cena + ' ' + priceUnit;
+  const kerfDisp = measureSystem === 'imperial' ? (kerfMm/25.4).toFixed(3) + '"' : kerfMm + 'mm';
+  const safeDisp = safetyMm > 0 ? ' · Rand ' + (measureSystem === 'imperial' ? (safetyMm/25.4).toFixed(3) + '"' : safetyMm + 'mm') + '×2' : '';
+
+  const tsHtml = [
+    '<div class="total-row highlight">',
+    '<div><div class="total-row-label">Total Coil Length</div>',
+    '<div class="total-row-sub">' + shelfResults.length + ' Durchläufe' + (komb > 0 ? ' (' + komb + ' kombiniert)' : '') + ' · Eff. ' + eff + '%' + (kerfMm > 0 ? ' · Fuge ' + kerfDisp : '') + safeDisp + '</div></div>',
+    '<div class="total-row-val"><span class="total-row-num teal">' + lenVal + '</span><span class="total-row-unit" style="color:var(--teal)">' + lenUnit + '</span></div>',
+    '</div>',
+    '<div class="total-row">',
+    '<div><div class="total-row-label">Cutting Service</div><div class="total-row-sub">sum (qty × length) of all profiles</div></div>',
+    '<div class="total-row-val"><span class="total-row-num teal">' + bendVal + '</span><span class="total-row-unit" style="color:var(--teal)">' + lenUnit + '</span></div>',
+    '</div>',
+    '<div class="total-row">',
+    '<div><div class="total-row-label">Material Cost</div><div class="total-row-sub">' + matSubLabel + '</div></div>',
+    '<div class="total-row-val"><span class="total-row-num amber">' + parseFloat(cenaMaterijala).toLocaleString('de-DE') + '</span><span class="total-row-unit">' + currency + '</span></div>',
+    '</div>',
+    '<div class="total-row">',
+    '<div><div class="total-row-label">Cutting Cost</div><div class="total-row-sub">' + cutSubLabel + '</div></div>',
+    '<div class="total-row-val"><span class="total-row-num amber">' + parseFloat(cenaTotal).toLocaleString('de-DE') + '</span><span class="total-row-unit">' + currency + '</span></div>',
+    '</div>',
+    '<div class="total-row grand">',
+    '<div><div class="total-row-label" style="color:var(--text)">Total Cost</div><div class="total-row-sub">Material + Cutting</div></div>',
+    '<div class="total-row-val"><span class="total-row-num amber" style="font-size:28px">' + parseFloat(ukupnaCena).toLocaleString('de-DE') + '</span><span class="total-row-unit" style="color:var(--amber)">' + currency + '</span></div>',
+    '</div>',
+    '<div class="vat-note">Preis inkl. MwSt.</div>'
+  ].join('\n    ');
+  document.getElementById('totalSection').innerHTML = tsHtml;
+  drawNesting(); saveToLocal();
+}
+
+
+function drawNesting() {
+  const canvas = document.getElementById('nestingCanvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const shelves = lastShelfResults, usableW = lastUsableWidthMm;
+  if (!shelves.length || usableW <= 0) {
+    canvas.height = 50; canvas.width = canvas.parentElement.clientWidth;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = isDark ? '#4a5568' : '#8090a4';
+    ctx.font = "500 12px 'DM Sans',sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('Keine Daten vorhanden', canvas.width / 2, 30); return;
+  }
+  const cw = canvas.parentElement.clientWidth, pad = 16, rowH = 48, labelW = 50, drawW = cw - pad*2 - labelW, gap = 6;
+  const totalH = pad + shelves.length * (rowH + gap) + pad;
+  canvas.width = cw; canvas.height = totalH; ctx.clearRect(0, 0, cw, totalH);
+  const maxLen = Math.max(...shelves.map(s => s.dMm));
+  const scaleX = drawW / maxLen, scaleY = rowH / usableW;
+  shelves.forEach((shelf, si) => {
+    const x0 = pad + labelW, y0 = pad + si * (rowH + gap), shelfW = Math.max(shelf.dMm * scaleX, 1);
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,.03)' : 'rgba(0,0,0,.04)';
+    ctx.fillRect(x0, y0, shelfW, rowH);
+    ctx.strokeStyle = isDark ? 'rgba(255,255,255,.1)' : 'rgba(0,0,0,.12)';
+    ctx.strokeRect(x0, y0, shelfW, rowH);
+    let curY = 0;
+    [...shelf.strips].sort((a, b) => b.sMm - a.sMm).forEach(strip => {
+      const sw = strip.dMm * scaleX, sh = strip.sMm * scaleY;
+      ctx.fillStyle = COLORS[strip.stavkaIdx % COLORS.length]; ctx.fillRect(x0, y0 + curY, sw, sh);
+      ctx.strokeStyle = COLORS_SOLID[strip.stavkaIdx % COLORS_SOLID.length]; ctx.lineWidth = 1; ctx.strokeRect(x0, y0 + curY, sw, sh);
+      if (sh > 12 && sw > 40) {
+        ctx.fillStyle = '#fff'; ctx.font = "600 10px 'DM Sans',sans-serif"; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(fmtMm(strip.sMm)+'×'+fmtMm(strip.dMm), x0+4, y0+curY+sh/2);
+      }
+      curY += sh;
+    });
+    if (curY < rowH) {
+      ctx.fillStyle = 'rgba(200,60,60,.05)'; ctx.fillRect(x0, y0+curY, shelfW, rowH-curY);
+      ctx.strokeStyle = 'rgba(200,60,60,.12)'; ctx.lineWidth = .5;
+      for (let hx=0; hx<shelfW; hx+=8) { ctx.beginPath(); ctx.moveTo(x0+hx, y0+curY); ctx.lineTo(x0+hx+(rowH-curY), y0+rowH); ctx.stroke(); }
+    }
+    ctx.fillStyle = isDark ? '#4a5568' : '#8090a4'; ctx.font = "500 11px 'DM Sans',sans-serif"; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('P'+(si+1), x0-6, y0+rowH/2);
+  });
+}
+
+
+function exportToCSV() {
+  const unit = measureSystem === 'imperial' ? 'in' : currentUnit;
+  const headers = ['#', 'Breite (' + unit + ')', 'Länge (' + unit + ')', 'Anz.'];
+  const rows = items.map((item, i) => [
+    i + 1,
+    item.sirina,
+    item.duzina,
+    item.kom
+  ]);
+  const csvContent = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'cuttool-export-' + new Date().toISOString().slice(0, 10) + '.csv';
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function togglePrivacy() {
+  const m = document.getElementById('privacy-modal');
+  m.style.display = m.style.display === 'none' ? 'flex' : 'none';
+}
+
+function initDelegation() {
+  const c = document.getElementById('itemsContainer');
+  c.addEventListener('input', e => { const row = e.target.closest('[data-item-id]'); if (!row) return; const id = parseInt(row.dataset.itemId); const field = e.target.dataset.field; if (id && field) updateItem(id, field, e.target.value); });
+  c.addEventListener('click', e => { const btn = e.target.closest('[data-remove-id]'); if (!btn) return; const id = parseInt(btn.dataset.removeId); if (id) removeItem(id); });
+}
+
+// Init
+const savedTheme = localStorage.getItem('ct_theme_de');
+if (savedTheme === 'light') { isDark = false; document.body.classList.add('light'); document.getElementById('themeIcon').innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'; }
+loadFromLocal();
+initDelegation();
+render();
+document.getElementById('printDate').textContent = new Date().toLocaleDateString('de-DE');
+let resizeTimer;
+window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawNesting, 200); });
+</script>
+</body>
+</html>

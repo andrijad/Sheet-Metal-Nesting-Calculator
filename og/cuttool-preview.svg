@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs>
+  <clipPath id="clip"><rect width="1200" height="630"/></clipPath>
+</defs>
+
+<!-- Background -->
+<rect width="1200" height="630" fill="#13151a"/>
+
+<!-- Subtle structural lines -->
+<line x1="0" y1="420" x2="1200" y2="420" stroke="#ffffff" stroke-width="1" opacity="0.05"/>
+<line x1="760" y1="0" x2="760" y2="420" stroke="#ffffff" stroke-width="1" opacity="0.05"/>
+
+<!-- Left accent bar -->
+<rect x="64" y="64" width="4" height="56" rx="2" fill="#2eb8ad"/>
+
+<!-- Tool icon — stylized coil strip representation -->
+<g transform="translate(80, 72)">
+  <rect x="0" y="0" width="56" height="14" rx="3" fill="#2eb8ad" opacity="0.9"/>
+  <rect x="0" y="20" width="40" height="14" rx="3" fill="#2eb8ad" opacity="0.6"/>
+  <rect x="0" y="40" width="48" height="14" rx="3" fill="#2eb8ad" opacity="0.75"/>
+</g>
+
+<!-- CutTool wordmark -->
+<text x="156" y="114" font-family="-apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif"
+  font-size="52" font-weight="800" fill="#dde2ea" letter-spacing="-2">CutTool</text>
+
+<!-- Tagline -->
+<text x="80" y="162" font-family="-apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif"
+  font-size="20" font-weight="400" fill="#66788e" letter-spacing="0.2">Sheet Metal Coil Nesting Calculator</text>
+
+<!-- Horizontal divider -->
+<line x1="80" y1="190" x2="680" y2="190" stroke="#2eb8ad" stroke-width="1" opacity="0.3"/>
+
+<!-- Pass visualization — main content block -->
+<!-- Background track -->
+<rect x="80" y="218" width="600" height="58" rx="6" fill="#1e2128"/>
+<!-- Pass 1 fill -->
+<rect x="80" y="218" width="462" height="58" rx="6" fill="#2eb8ad" opacity="0.16"/>
+<rect x="80" y="218" width="462" height="58" rx="6" fill="none" stroke="#2eb8ad" stroke-width="1" opacity="0.5"/>
+<!-- Pass 1 labels -->
+<text x="96" y="244" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="13" font-weight="700" fill="#2eb8ad">Pass 1 · 6.09 m</text>
+<text x="96" y="263" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="12" font-weight="400" fill="#66788e">49.0 cm + 49.0 cm</text>
+<!-- Efficiency pill -->
+<rect x="498" y="229" width="68" height="28" rx="14" fill="#2eb8ad" opacity="0.18"/>
+<text x="532" y="248" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="14" font-weight="700" fill="#2eb8ad">79%</text>
+<!-- waste label -->
+<text x="576" y="252" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" fill="#505a6b">waste 1.2 m²</text>
+
+<!-- Pass 2 -->
+<rect x="80" y="290" width="600" height="58" rx="6" fill="#1e2128"/>
+<rect x="80" y="290" width="300" height="58" rx="6" fill="#c49828" opacity="0.12"/>
+<rect x="80" y="290" width="300" height="58" rx="6" fill="none" stroke="#c49828" stroke-width="1" opacity="0.4"/>
+<text x="96" y="316" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="13" font-weight="700" fill="#c49828">Pass 2 · 2.88 m</text>
+<text x="96" y="335" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="12" font-weight="400" fill="#66788e">32.1 cm + 32.1 cm</text>
+<rect x="498" y="301" width="68" height="28" rx="14" fill="#c49828" opacity="0.15"/>
+<text x="532" y="320" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="14" font-weight="700" fill="#c49828">52%</text>
+<text x="576" y="324" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" fill="#505a6b">waste 1.8 m²</text>
+
+<!-- Pass 3 small -->
+<rect x="80" y="362" width="600" height="44" rx="6" fill="#1e2128"/>
+<rect x="80" y="362" width="570" height="44" rx="6" fill="#2eb8ad" opacity="0.08"/>
+<text x="96" y="382" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="12" font-weight="700" fill="#2eb8ad" opacity="0.7">Pass 3 · 1.00 m</text>
+<text x="96" y="398" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" fill="#505a6b">1.06 m × 1</text>
+<text x="576" y="392" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" fill="#505a6b">94%</text>
+
+<!-- Right panel — metrics summary -->
+<rect x="790" y="72" width="340" height="340" rx="12" fill="#1e2128"/>
+<rect x="790" y="72" width="340" height="340" rx="12" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.07"/>
+
+<!-- Metric 1: Total coil length -->
+<text x="814" y="120" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" font-weight="600" fill="#505a6b" letter-spacing="1">TOTAL COIL LENGTH</text>
+<text x="814" y="158" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="38" font-weight="800" fill="#2eb8ad" letter-spacing="-1">21.27</text>
+<text x="996" y="158" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="20" font-weight="400" fill="#2eb8ad">m</text>
+
+<!-- Divider -->
+<line x1="814" y1="178" x2="1110" y2="178" stroke="#ffffff" stroke-width="1" opacity="0.07"/>
+
+<!-- Metric 2: Efficiency -->
+<text x="814" y="210" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" font-weight="600" fill="#505a6b" letter-spacing="1">EFFICIENCY</text>
+<text x="814" y="248" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="38" font-weight="800" fill="#dde2ea" letter-spacing="-1">77.3</text>
+<text x="985" y="248" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="20" font-weight="400" fill="#66788e">%</text>
+
+<!-- Divider -->
+<line x1="814" y1="268" x2="1110" y2="268" stroke="#ffffff" stroke-width="1" opacity="0.07"/>
+
+<!-- Metric 3: Total cost -->
+<text x="814" y="300" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="11" font-weight="600" fill="#505a6b" letter-spacing="1">TOTAL COST</text>
+<text x="814" y="338" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="38" font-weight="800" fill="#c49828" letter-spacing="-1">312.50</text>
+<text x="1050" y="338" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="18" font-weight="400" fill="#c49828">USD</text>
+
+<!-- Free badge -->
+<rect x="814" y="366" width="74" height="28" rx="6" fill="#2eb8ad" opacity="0.15"/>
+<rect x="814" y="366" width="74" height="28" rx="6" fill="none" stroke="#2eb8ad" stroke-width="1" opacity="0.5"/>
+<text x="851" y="385" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="12" font-weight="700" fill="#2eb8ad">FREE</text>
+
+<!-- No signup badge -->
+<rect x="898" y="366" width="108" height="28" rx="6" fill="#1e2128"/>
+<rect x="898" y="366" width="108" height="28" rx="6" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.1"/>
+<text x="952" y="385" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="12" font-weight="400" fill="#66788e">No signup</text>
+
+<!-- Bottom bar -->
+<rect x="0" y="548" width="1200" height="82" fill="#1e2128"/>
+<line x1="0" y1="548" x2="1200" y2="548" stroke="#ffffff" stroke-width="1" opacity="0.07"/>
+
+<!-- Bottom left: domain -->
+<text x="80" y="596" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="18" font-weight="700" fill="#dde2ea">cuttool.app</text>
+
+<!-- Bottom right: languages -->
+<text x="1120" y="596" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="13" font-weight="400" fill="#505a6b">EN · SR · DE · FR · IT · ES</text>
+
+<!-- Bottom center tagline -->
+<text x="600" y="596" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+  font-size="13" font-weight="400" fill="#505a6b">Plan coil cuts in seconds · Free · Browser-based</text>
+
+</svg>
