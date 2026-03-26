@@ -1,0 +1,7 @@
+# Cloudflare Pages _redirects
+# Clean trailing slash handling
+/sr  /sr/  301
+/de  /de/  301
+/fr  /fr/  301
+/it  /it/  301
+/es  /es/  301
